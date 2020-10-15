@@ -1,13 +1,30 @@
-# CRUD(Create, Red, Update, Delete) fullstack app project with NodeJS server and ReactJS front
+# CRUD(Create, Red, Update, Delete) fullstack JS app project with NodeJS server and ReactJS frontend
+
+## Used Techologies
+- Backend
+  - Native NodeJS
+  - nodemon
+  - Sequelize for database manipulation
+  - mysql2
+- Frontend
+  - ReactJS (Create-react-app)
+  - Styled Components
+  - react-redux
+  - redux-form
+  - redux-thunk
 
 ## How to test it
+1. Clone repository ``` git clone https://github.com/master-bogdan/crud-fullstack.git ```
+2. run ```npm init```
+3. You must have local server for database. In ```./server/db/``` folder you can find ```crud.sql``` database dump file. Also there is sequelize migration, watch [official sequelize documentation](https://sequelize.org/master/manual/migrations.html)
+4. run ```npm run prod``` for start server
 
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run dev`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -40,32 +57,10 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### `npm run server`
+This just start NodeJS server
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### `npm run prod`
+This command start production build
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
