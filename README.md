@@ -1,4 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# CRUD(Create, Red, Update, Delete) fullstack app project with NodeJS server and ReactJS front
+
+## How to test it
+
 
 ## Available Scripts
 
