@@ -1,10 +1,8 @@
 const http = require('http');
 const sendRes = require('./services/sendRes');
-// const getData = require('./services/getData');
 const getContentType = require('./services/getContentType');
 const get = require('./routes/get');
 const post = require('./routes/post');
-const { Characters } = require('./db/config_db');
 
 http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
