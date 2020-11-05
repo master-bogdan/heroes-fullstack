@@ -1,7 +1,7 @@
-# CRUD(Create, Red, Update, Delete) fullstack app project with NodeJS server and ReactJS front
+# CRUD(Create, Read, Update, Delete) fullstack app project with NodeJS server and ReactJS front
 
 ## How to test it
-
+1. Clone repository git clone https://github.com/master-bogdan/crud-fullstack.git)
 
 ## Available Scripts
 

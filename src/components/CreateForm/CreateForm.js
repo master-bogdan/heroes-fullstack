@@ -59,7 +59,7 @@ const CreateForm = ({ handleSubmit, modalOpen, setModalOpen}) => {
 }
 
 const onSubmit = (values, dispatch) => {
-    fetch('http://localhost:3001/api/create', {
+    return fetch('http://localhost:3001/api/create', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
