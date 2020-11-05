@@ -14,10 +14,12 @@
 - redux-thunk  
 - 
 ## How to test it
-Clone repository with command `git clone https://github.com/master-bogdan/crud-fullstack.git`  
-Go to directory with `cd /crud-fullstack`
-Run `npm init` to install dependencies
-You must have local server for database. In ./server/db/ folder you can find crud.sql database dump file. Also there is sequelize migration, watch official sequelize documentation
+Clone repository with command 
+`git clone https://github.com/master-bogdan/crud-fullstack.git`  
+Go to directory with `cd /crud-fullstack`  
+Run `npm init` to install dependencies  
+You must have local server for database.  
+In ./server/db/ folder you can find crud.sql database dump file. Also there is sequelize migration, watch official sequelize documentation  
 Run `npm run prod` for start server
 
 ## Available Scripts
