@@ -1,4 +1,4 @@
-# CRUD(Create, Red, Update, Delete) fullstack JS app project with NodeJS server and ReactJS frontend
+# CRUD(Create, Read, Update, Delete) fullstack JS app project with pure NodeJS server and ReactJS frontend
 
 ## Used Techologies  
 ### Backend
