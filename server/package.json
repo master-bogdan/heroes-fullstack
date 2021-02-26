@@ -10,7 +10,7 @@
   },
   "scripts": {
     "server": "npx nodemon ./index.ts",
-    "dev": "concurrently \"npm run server\" \"npm start\"",
+    "dev": "concurrently \"npm run server\" \"cd ../ && cd ./client/ && npm start\"",
     "prod": "concurrently \"npm run build\" \"npm run server\""
   },
   "browserslist": {

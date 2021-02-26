@@ -42,5 +42,6 @@ module.exports = {
     'no-use-before-define': 0,
     'no-unused-vars': 1,
     'no-undef': 1,
+    'no-underscore-dangle': 0,
   },
 };

@@ -1,10 +1,11 @@
 import {
   createStore,
-  compose,
   applyMiddleware,
   combineReducers,
+  Action,
 } from 'redux';
-import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import reduxThunk, { ThunkAction } from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 import crudReducer from './crud/crudReducer';
 
@@ -24,5 +25,15 @@ const logger = (store: any) => (next: any) => (action: any) => {
 
 export const store = createStore(
   rootReducer,
-  applyMiddleware(thunk, logger),
+  composeWithDevTools(applyMiddleware(reduxThunk, logger)),
 );
+
+// global types
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+  >
+export type AppDispatch = typeof store.dispatch;

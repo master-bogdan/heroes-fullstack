@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CardEditButton, CardDeleteButton } from '../Ui/Buttons';
 import {
-  Card, CardImg, CardDescr, CardTitle, Form, ImageFormField, TitleFormField, DescrFormField,
+  Card,
+  CardImg,
+  CardDescr,
+  CardTitle,
+  Form,
+  ImageFormField,
+  TitleFormField,
+  DescrFormField,
 } from './styles';
 
 interface Props {

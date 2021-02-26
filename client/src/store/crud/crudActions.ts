@@ -3,23 +3,42 @@ import {
   CREATE_CHARACTER,
   UPDATE_CHARACTER,
   DELETE_CHARACTER,
+  CrudActions,
+  ICharacter,
+  ICreateCharacter,
 } from './crudTypes';
+import axios from 'axios';
+import { AppThunk } from 'store';
 
-export const ReadCharacters = (data: any) => ({
+export const fetchCharactersAction = (data: ICharacter[]): CrudActions => ({
   type: READ_CHARACTERS,
   payload: data,
 });
 
-export const FetchCharacters = () => (dispatch: any) => {
-  fetch('http://localhost:3001/api/data')
-    .then((res) => res.json())
-    .then((data) => dispatch(ReadCharacters(data)))
-    .catch((err) => console.log(err));
+export const createCharacterAction = (data: ICharacter[]): CrudActions => ({
+  type: CREATE_CHARACTER,
+  payload: data,
+});
+
+export const FetchCharacters = (): AppThunk => async (dispatch) => {
+  try {
+    const { data } = await axios.get('/api');
+    dispatch(fetchCharactersAction(data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const CreateCharacter = () => ({
-  type: CREATE_CHARACTER,
-});
+export const CreateCharacter = (char: ICreateCharacter): AppThunk => async (dispatch) => {
+  try {
+    const { data } = await axios.post('/api', {
+      char,
+    });
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const UpdateCharacter = (id: any, values: any) => (dispatch: any) => {
   fetch('http://localhost:3001/api/update', {

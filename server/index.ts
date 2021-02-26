@@ -9,27 +9,29 @@ dotenv.config();
 const app = express();
 
 // Basic Configuration
-const PORT = process.env.PORT || 3000;
-const db = mongoose.connection;
+const PORT = process.env.PORT || 3001;
 
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static('../client/build'));
+app.use(express.static(path.join(__dirname, '../', './client/build')));
+app.use(express.static(path.join(__dirname, '../', './client/public')));
 
 // Router
-app.use('/', router);
+app.use(router);
 
 const start = async () => {
   try {
+    await mongoose.connection.on('connected', () => {
+      console.log('mongoose connected');
+    });
     await mongoose.connect(`${process.env.MONGO_URI}`, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true,
     });
-    console.log(mongoose.connection.readyState);
 
     app.listen(PORT, () => {
       console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
