@@ -8,9 +8,13 @@
     "express": "^4.17.1",
     "mongoose": "^5.11.17"
   },
+  "engines": {
+    "node": "14.x",
+    "npm": "6.14.7"
+  },
   "scripts": {
-    "server": "npx nodemon ./index.ts",
-    "build": "concurrently \"tsc --skipLibCheck\" \"cd ../ && cd ./client/ && npm run build\"",
+    "start": "nodemon ./build/index.js",
+    "build": "tsc --skipLibCheck",
     "dev": "concurrently \"npm run server\" \"cd ../ && cd ./client/ && npm start\"",
     "prod": "concurrently \"npm run build\" \"npm run server\""
   },
