@@ -6,6 +6,7 @@ import {
   CrudActions,
   ICharacter,
   ICreateCharacter,
+  UpdateFormData,
 } from './crudTypes';
 import axios from 'axios';
 import { AppThunk } from 'store';
@@ -15,9 +16,16 @@ export const fetchCharactersAction = (data: ICharacter[]): CrudActions => ({
   payload: data,
 });
 
-export const createCharacterAction = (data: ICharacter[]): CrudActions => ({
+export const createCharacterAction = (): CrudActions => ({
   type: CREATE_CHARACTER,
-  payload: data,
+});
+
+export const updateCharacterAction = (): CrudActions => ({
+  type: UPDATE_CHARACTER,
+});
+
+export const deleteCharacterAction = (): CrudActions => ({
+  type: DELETE_CHARACTER,
 });
 
 export const FetchCharacters = (): AppThunk => async (dispatch) => {
@@ -34,43 +42,37 @@ export const CreateCharacter = (char: ICreateCharacter): AppThunk => async (disp
     const { data } = await axios.post('/api', {
       char,
     });
+    dispatch(createCharacterAction());
+    dispatch(FetchCharacters());
     console.log(data);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const UpdateCharacter = (id: any, values: any) => (dispatch: any) => {
-  fetch('http://localhost:3001/api/update', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id, values }),
-  })
-    .then((res) => res.json())
-    .then(dispatch({
-      type: UPDATE_CHARACTER,
-      payload: { id, values },
-    }))
-    .then(dispatch(FetchCharacters()))
-    .catch((err) => console.log(err));
+export const UpdateCharacter = (
+  id: string,
+  values: UpdateFormData,
+): AppThunk => async (dispatch) => {
+  try {
+    const { data } = await axios.put('/api', {
+      id,
+      char: { ...values },
+    });
+    dispatch(updateCharacterAction());
+    dispatch(FetchCharacters());
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const DeleteCharacter = (id: any) => (dispatch: any) => {
-  fetch('http://localhost:3001/api/delete', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(id),
-  })
-    .then((res) => res.json())
-    .then(dispatch({
-      type: DELETE_CHARACTER,
-      payload: id,
-    }))
-    .catch((err) => console.log(err));
+export const DeleteCharacter = (id: string): AppThunk => async (dispatch) => {
+  try {
+    const { data } = await axios.delete('/api', { data: { id } });
+    dispatch(FetchCharacters());
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
 };

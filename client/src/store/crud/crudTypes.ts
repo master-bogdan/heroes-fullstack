@@ -20,6 +20,12 @@ export interface ICreateCharacter {
   image: string
 }
 
+export type UpdateFormData = {
+  img: string
+  title: string
+  descr: string
+}
+
 interface SetCharactersAction {
   type: typeof READ_CHARACTERS
   payload: ICharacter[]
@@ -27,7 +33,18 @@ interface SetCharactersAction {
 
 interface AddCharacterAction {
   type: typeof CREATE_CHARACTER
-  payload: ICharacter[]
 }
 
-export type CrudActions = SetCharactersAction | AddCharacterAction;
+interface UpdateCharacterAction {
+  type: typeof UPDATE_CHARACTER
+}
+
+interface DeleteCharacterAction {
+  type: typeof DELETE_CHARACTER
+}
+
+export type CrudActions =
+SetCharactersAction |
+AddCharacterAction |
+UpdateCharacterAction |
+DeleteCharacterAction;

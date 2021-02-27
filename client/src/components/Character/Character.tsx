@@ -11,6 +11,9 @@ import {
   TitleFormField,
   DescrFormField,
 } from './styles';
+import { UpdateCharacter, DeleteCharacter } from 'store/crud/crudActions';
+// Types
+import { UpdateFormData } from 'store/crud/crudTypes';
 
 interface Props {
   id: string
@@ -22,8 +25,8 @@ interface Props {
 const Character: React.FC<Props> = ({
   id, img, title, descr,
 }) => {
-  const [isEdit, setIsEdit] = useState(false);
-  const [values, setValue] = useState({
+  const [isEdit, setIsEdit] = useState <boolean>(false);
+  const [values, setValue] = useState <UpdateFormData>({
     img,
     title,
     descr,
@@ -31,24 +34,28 @@ const Character: React.FC<Props> = ({
 
   const dispatch = useDispatch();
 
-  const onSubmit = (event: any) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setIsEdit(!isEdit);
-    // dispatch(UpdateCharacter(id, values));
+    dispatch(UpdateCharacter(id, values));
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue({
       ...values,
       [event.target.name]: event.target.value,
     });
   };
 
+  const deleteChar = () => {
+    dispatch(DeleteCharacter(id));
+  };
+
   return (
     <>
       { isEdit
         ? (
-          <Form onSubmit={(event) => onSubmit(event)}>
+          <Form onSubmit={onSubmit}>
             <CardImg src={img} />
             <ImageFormField
               name="image"
@@ -72,6 +79,7 @@ const Character: React.FC<Props> = ({
             </CardEditButton>
             <CardDeleteButton
               type="button"
+              onClick={deleteChar}
             >
               Delete
             </CardDeleteButton>
