@@ -1,18 +1,42 @@
 # CRUD(Create, Read, Update, Delete) fullstack JS app project with pure NodeJS server and ReactJS frontend
 
+# ToDo
+- Add success, error notifications
+- Add confirm modals
+- Add auth with token
+
 ## Used Techologies  
 ### Backend
 - Native NodeJS
 - nodemon
 - Sequelize for database manipulation
 - mysql2
+(After Refactoring)
+- Express
+- Nodemon
+- MongoDB (mongoose)
+- TypeScript
+- Cors
+
+### Project Architecture
+```
+📦client
+ ┣ 📂public
+ ┣ 📂src
+ 📦server
+ ┣ 📂models
+ ┣ 📂routes
+ ┣ 📜index.ts
+```
 ### Frontend
 - ReactJS (Create-react-app)
 - Styled Components
 - react-redux
 - redux-form
 - redux-thunk  
-- 
+(Add after Refactoring)
+- TypeScript
+- Axios
 ## How to test it
 Clone repository with command  
 `git clone https://github.com/master-bogdan/crud-fullstack.git`  
