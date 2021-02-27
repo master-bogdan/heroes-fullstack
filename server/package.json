@@ -10,6 +10,7 @@
   },
   "scripts": {
     "server": "npx nodemon ./index.ts",
+    "build": "concurrently \"tsc --skipLibCheck\" \"cd ../ && cd ./client/ && npm run build\"",
     "dev": "concurrently \"npm run server\" \"cd ../ && cd ./client/ && npm start\"",
     "prod": "concurrently \"npm run build\" \"npm run server\""
   },

@@ -10,20 +10,20 @@
 - Native NodeJS
 - nodemon
 - Sequelize for database manipulation
-- mysql2
-(After Refactoring)
+- mysql2  
+(After Refactoring)  
 - Express
 - Nodemon
 - MongoDB (mongoose)
 - TypeScript
 - Cors
 
-### Project Architecture
+### Project Structure
 ```
 📦client
  ┣ 📂public
  ┣ 📂src
- 📦server
+📦server
  ┣ 📂models
  ┣ 📂routes
  ┣ 📜index.ts
@@ -34,7 +34,7 @@
 - react-redux
 - redux-form
 - redux-thunk  
-(Add after Refactoring)
+(Add after Refactoring)  
 - TypeScript
 - Axios
 ## How to test it
