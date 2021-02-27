@@ -18,10 +18,16 @@
 - TypeScript
 - Cors
 
-### Backend Architecture
-- - models - database models 
-- - routes - main routes
-- index.ts - main server file
+### Project Architecture
+```
+📦client
+ ┣ 📂public
+ ┣ 📂src
+ 📦server
+ ┣ 📂models
+ ┣ 📂routes
+ ┣ 📜index.ts
+```
 ### Frontend
 - ReactJS (Create-react-app)
 - Styled Components
