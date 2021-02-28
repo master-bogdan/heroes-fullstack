@@ -30,7 +30,7 @@ export const deleteCharacterAction = (): CrudActions => ({
 
 export const FetchCharacters = (): AppThunk => async (dispatch) => {
   try {
-    const { data } = await axios.get('/api');
+    const { data } = await axios.get(process.env.REACT_APP_URL);
     dispatch(fetchCharactersAction(data));
   } catch (error) {
     console.log(error);
@@ -39,7 +39,7 @@ export const FetchCharacters = (): AppThunk => async (dispatch) => {
 
 export const CreateCharacter = (char: ICreateCharacter): AppThunk => async (dispatch) => {
   try {
-    const { data } = await axios.post('/api', {
+    const { data } = await axios.post(process.env.REACT_APP_URL, {
       char,
     });
     dispatch(createCharacterAction());
@@ -55,7 +55,7 @@ export const UpdateCharacter = (
   values: UpdateFormData,
 ): AppThunk => async (dispatch) => {
   try {
-    const { data } = await axios.put('/api', {
+    const { data } = await axios.put(process.env.REACT_APP_URL, {
       id,
       char: { ...values },
     });
@@ -69,7 +69,7 @@ export const UpdateCharacter = (
 
 export const DeleteCharacter = (id: string): AppThunk => async (dispatch) => {
   try {
-    const { data } = await axios.delete('/api', { data: { id } });
+    const { data } = await axios.delete(process.env.REACT_APP_URL, { data: { id } });
     dispatch(FetchCharacters());
     console.log(data);
   } catch (error) {

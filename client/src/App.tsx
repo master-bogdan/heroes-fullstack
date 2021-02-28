@@ -36,7 +36,8 @@ const App: React.FC = () => {
         setModalOpen={setModalOpen}
       />
       <Container>
-        {data.map((item: ICharacter) => (
+        {(data.length !== 0 && data !== undefined)
+        && data.map((item: ICharacter) => (
           <Character
             key={item._id}
             id={item._id}
