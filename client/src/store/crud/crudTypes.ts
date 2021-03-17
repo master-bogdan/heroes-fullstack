@@ -1,10 +1,13 @@
 export const READ_CHARACTERS = 'READ_CHARACTERS';
+export const LOADING_CHARACTERS = 'LOADING_CHARACTERS';
+
 export const CREATE_CHARACTER = 'CREATE_CHARACTER';
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER';
 export const DELETE_CHARACTER = 'DELETE_CHARACTER';
 
 export interface CrudState {
   data: ICharacter[]
+  isLoading: boolean
 }
 
 export interface ICharacter {
@@ -26,6 +29,10 @@ export type UpdateFormData = {
   descr: string
 }
 
+interface SetLoadingAction {
+  type: typeof LOADING_CHARACTERS
+  payload: boolean
+}
 interface SetCharactersAction {
   type: typeof READ_CHARACTERS
   payload: ICharacter[]
@@ -44,6 +51,7 @@ interface DeleteCharacterAction {
 }
 
 export type CrudActions =
+SetLoadingAction |
 SetCharactersAction |
 AddCharacterAction |
 UpdateCharacterAction |

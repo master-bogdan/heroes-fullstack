@@ -19,10 +19,10 @@
   "scripts": {
     "start": "node build/index.js",
     "build": "tsc --skipLibCheck",
+    "server": "nodemon index.ts",
     "tsc": "tsc",
     "postinstall": "tsc --skipLibCheck",
-    "dev": "concurrently \"npm run server\" \"cd ../ && cd ./client/ && npm start\"",
-    "prod": "concurrently \"npm run build\" \"npm run server\""
+    "dev": "concurrently -n 'server,client' -c 'yellow,blue' \"npm run server\" \"cd ../ && npm run start --prefix client\""
   },
   "browserslist": {
     "production": [

@@ -1,5 +1,6 @@
 import {
   READ_CHARACTERS,
+  LOADING_CHARACTERS,
   CREATE_CHARACTER,
   UPDATE_CHARACTER,
   DELETE_CHARACTER,
@@ -10,6 +11,11 @@ import {
 } from './crudTypes';
 import axios from 'axios';
 import { AppThunk } from 'store';
+
+export const loadingCharactersAction = (data: boolean): CrudActions => ({
+  type: LOADING_CHARACTERS,
+  payload: data,
+});
 
 export const fetchCharactersAction = (data: ICharacter[]): CrudActions => ({
   type: READ_CHARACTERS,
@@ -30,10 +36,13 @@ export const deleteCharacterAction = (): CrudActions => ({
 
 export const FetchCharacters = (): AppThunk => async (dispatch) => {
   try {
+    dispatch(loadingCharactersAction(true));
     const { data } = await axios.get(process.env.REACT_APP_URL);
     dispatch(fetchCharactersAction(data));
   } catch (error) {
     console.log(error);
+  } finally {
+    dispatch(loadingCharactersAction(false));
   }
 };
 

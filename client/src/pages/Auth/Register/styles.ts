@@ -1,3 +1,3 @@
 import styled from 'styled-components';
 
-export const AppPage = styled.div``;
+export const LoginPage = styled.div``;

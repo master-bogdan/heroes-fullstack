@@ -6,8 +6,12 @@ import { HeaderButton } from '../Ui/Buttons';
 const Header = ({ modalOpen, setModalOpen }: any) => (
   <Block>
     <Container>
-      <Logo>CRUD STAR WARS APP</Logo>
-      <HeaderButton onClick={() => setModalOpen(!modalOpen)}>Add new character</HeaderButton>
+      <Logo>CRUD CHARACTER APP</Logo>
+      <HeaderButton
+        onClick={() => setModalOpen(!modalOpen)}
+      >
+        Add new character
+      </HeaderButton>
     </Container>
   </Block>
 );

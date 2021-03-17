@@ -13,7 +13,7 @@ const Block = styled.div`
     max-width: 1024px;
     height: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
     margin: 0 auto;

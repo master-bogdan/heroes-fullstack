@@ -6,13 +6,18 @@ import {
 } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxThunk, { ThunkAction } from 'redux-thunk';
+// Reducers
 import { reducer as formReducer } from 'redux-form';
 import crudReducer from './crud/crudReducer';
+import authReducer from './auth/authReducer';
 
 const rootReducer = combineReducers({
   crud: crudReducer,
+  auth: authReducer,
   form: formReducer,
 });
+
+// middleware
 
 const logger = (store: any) => (next: any) => (action: any) => {
   console.group(action.type);
@@ -23,9 +28,17 @@ const logger = (store: any) => (next: any) => (action: any) => {
   return result;
 };
 
+let middleware: any = [
+  reduxThunk,
+];
+const processNode: any = process.env.NODE_ENV;
+if (processNode === 'development') {
+  middleware = [...middleware, logger];
+}
+
 export const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(reduxThunk, logger)),
+  composeWithDevTools(applyMiddleware(...middleware)),
 );
 
 // global types
