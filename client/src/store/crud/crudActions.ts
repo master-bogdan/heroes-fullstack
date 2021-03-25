@@ -53,9 +53,10 @@ export const CreateCharacter = (char: ICreateCharacter): AppThunk => async (disp
     });
     dispatch(createCharacterAction());
     dispatch(FetchCharacters());
-    console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
+    return error;
   }
 };
 

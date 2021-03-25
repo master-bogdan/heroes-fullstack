@@ -3,6 +3,8 @@ import {
   applyMiddleware,
   combineReducers,
   Action,
+  Store,
+  Middleware,
 } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxThunk, { ThunkAction } from 'redux-thunk';
@@ -19,7 +21,7 @@ const rootReducer = combineReducers({
 
 // middleware
 
-const logger = (store: any) => (next: any) => (action: any) => {
+const logger = (store: Store) => (next: any) => (action: Action) => {
   console.group(action.type);
   console.info('dispatching', action);
   const result = next(action);
@@ -31,7 +33,7 @@ const logger = (store: any) => (next: any) => (action: any) => {
 let middleware: any = [
   reduxThunk,
 ];
-const processNode: any = process.env.NODE_ENV;
+const processNode: string = process.env.NODE_ENV;
 if (processNode === 'development') {
   middleware = [...middleware, logger];
 }
