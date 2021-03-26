@@ -1,9 +1,9 @@
 import express from 'express';
-import path from 'path';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import router from './routes';
+import api from './routes/api';
+import auth from './routes/auth';
 
 dotenv.config();
 const app = express();
@@ -16,8 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-// Router
-app.use(router);
+// Auth
+app.use(auth);
+
+// API
+app.use(api);
 
 const start = async () => {
   try {

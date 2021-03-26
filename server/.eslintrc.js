@@ -19,5 +19,6 @@ module.exports = {
     'no-unused-vars': 'warn',
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

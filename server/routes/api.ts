@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import { Character } from '../models/Character';
 
-const router = express.Router();
+const api = express.Router();
 
-router.get('/api', async (req: Request, res: Response) => {
+api.get('/api', async (req: Request, res: Response) => {
   try {
     const characters = await Character.find();
     if (characters) {
@@ -17,7 +17,7 @@ router.get('/api', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/api', async (req: Request, res: Response) => {
+api.post('/api', async (req: Request, res: Response) => {
   try {
     const { char } = req.body;
     if (char !== null && char !== undefined) {
@@ -38,7 +38,7 @@ router.post('/api', async (req: Request, res: Response) => {
   }
 });
 
-router.put('/api', async (req: Request, res: Response) => {
+api.put('/api', async (req: Request, res: Response) => {
   try {
     const { id, char } = req.body;
     await Character.findByIdAndUpdate(id, { ...char }, null, (error) => {
@@ -54,7 +54,7 @@ router.put('/api', async (req: Request, res: Response) => {
   }
 });
 
-router.delete('/api', async (req: Request, res: Response) => {
+api.delete('/api', async (req: Request, res: Response) => {
   try {
     const { id } = req.body;
     await Character.findByIdAndDelete(id, null, (error) => {
@@ -70,4 +70,4 @@ router.delete('/api', async (req: Request, res: Response) => {
   }
 });
 
-export default router;
+export default api;

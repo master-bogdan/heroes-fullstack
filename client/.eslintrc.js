@@ -7,6 +7,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
     'airbnb',
   ],
   parser: '@typescript-eslint/parser',
@@ -43,5 +44,6 @@ module.exports = {
     'no-unused-vars': 1,
     'no-undef': 1,
     'no-underscore-dangle': 0,
+    'no-explicit-any': 0,
   },
 };
