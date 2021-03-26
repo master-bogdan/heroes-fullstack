@@ -1,5 +1,5 @@
 # CRUD (Create, Read, Update, Delete) fullstack JS app [DEMO](https://crud-fullstack.vercel.app/)  
-Fullstack Rest API app where you can create card of your favorite character  
+Fullstack Rest API app where you can create cards with your favorite characters  
 
 ## API request map
 ```
@@ -12,7 +12,6 @@ DELETE /api - delete character
 # ToDo
 - Add success, error notifications
 - Add confirm modals
-- Add auth with token  
 
 ## Used Techologies  
 ### Backend
@@ -26,6 +25,7 @@ DELETE /api - delete character
 - MongoDB (mongoose)
 - TypeScript
 - Cors  
+- JWT Token
 
 ### Frontend
 - ReactJS (Create-react-app)
