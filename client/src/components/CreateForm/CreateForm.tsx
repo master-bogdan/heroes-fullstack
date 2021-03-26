@@ -23,21 +23,24 @@ import { ICreateCharacter } from 'store/crud/crudTypes';
 interface FormProps {
   modalOpen: boolean
   setModalOpen: (modalOpen: boolean) => typeof modalOpen
-  handleSubmit: any
 }
 
-const handleSubmitTest = (values: ICreateCharacter, dispatch: any) => {
-  dispatch(CreateCharacter(values));
-  dispatch(reset('createForm'));
-};
-
-const CreateForm: React.FC<FormProps & InjectedFormProps> = ({
+const CreateForm: React.FC<InjectedFormProps<ICreateCharacter> & FormProps> = ({
   modalOpen,
   setModalOpen,
   handleSubmit,
+  pristine,
+  submitting,
 }) => {
-  const clickHandler = (event: any) => {
-    event.preventDefault();
+  const dispatch = useDispatch();
+
+  const handleSubmitTest = (values: ICreateCharacter) => {
+    dispatch(CreateCharacter(values));
+    dispatch(reset('createForm'));
+    setModalOpen(!modalOpen);
+  };
+
+  const closeHandler = () => {
     setModalOpen(!modalOpen);
   };
 
@@ -45,12 +48,8 @@ const CreateForm: React.FC<FormProps & InjectedFormProps> = ({
     <Overlay
       modalOpen={modalOpen}
     >
-      <Form onSubmit={(event) => {
-        clickHandler(event);
-        handleSubmit();
-      }}
-      >
-        <Title>Create Star Wars Character</Title>
+      <Form onSubmit={handleSubmit((val) => handleSubmitTest(val))}>
+        <Title>Create Your Favorite Character</Title>
         <Label htmlFor="image">Insert your link to Image</Label>
         <ImgInput
           name="image"
@@ -74,11 +73,13 @@ const CreateForm: React.FC<FormProps & InjectedFormProps> = ({
         />
         <SubmitButton
           type="submit"
+          disabled={pristine || submitting}
         >
           Create
         </SubmitButton>
         <CancelButton
           type="button"
+          onClick={closeHandler}
         >
           Cancel Creation
         </CancelButton>
@@ -87,8 +88,7 @@ const CreateForm: React.FC<FormProps & InjectedFormProps> = ({
   );
 };
 
-export default reduxForm<any, any>({
+export default reduxForm<InjectedFormProps, any>({
   // a unique name for the form
   form: 'createForm',
-  onSubmit: handleSubmitTest,
 })(CreateForm);

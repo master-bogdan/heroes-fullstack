@@ -12,7 +12,7 @@ export const Overlay = styled.div`
     bottom: 0;
     background: rgba(0,0,0,0.5);
     z-index: 2;
-    display: ${({ modalOpen }: { modalOpen: any}) => (modalOpen ? 'flex' : 'none')};
+    display: ${({ modalOpen }: { modalOpen: boolean }) => (modalOpen ? 'flex' : 'none')};
     align-items: center;
     justify-content: center;
     transition: all 0.5s ease-in;

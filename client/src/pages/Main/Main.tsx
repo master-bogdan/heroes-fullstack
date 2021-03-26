@@ -17,9 +17,10 @@ import { RootState } from 'store';
 import { ICharacter } from 'store/crud/crudTypes';
 
 const Main: React.FC = () => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { data, isLoading } = useSelector((state: RootState) => state.crud);
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(FetchCharacters());

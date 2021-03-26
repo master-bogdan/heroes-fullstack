@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const LoginPage = styled.div`
   position: fixed;
@@ -26,6 +27,7 @@ export const Wrapper = styled.div`
 export const Title = styled.h1`
   color: #fff;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 export const LoginForm = styled.form`
@@ -40,9 +42,41 @@ export const LoginForm = styled.form`
 
 export const Input = styled.input`
   width: 100%;
+  height: 30px;
+  margin: 10px 0;
+
+  &::placeholder {
+    padding: 0 5px;
+  }
 `;
 
 export const LoginButton = styled.button`
   width: 100%;
   outline: none;
+  border: none;
+  height: 30px;
+  margin-top: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  transition: 0.3s;
+
+  &:hover {
+    background: rgba(0, 0, 0, 1);
+  }
+`;
+
+export const RegisterLink = styled(Link)`
+  font-size: 12px;
+  width: fit-content;
+  margin-right: auto;
+  margin-top: 20px;
+  color: rgba(0, 0, 0, 0.5);
+  transition: 0.3s;
+
+  &:hover {
+    color: rgba(0, 0, 0, 1);
+  }
 `;
