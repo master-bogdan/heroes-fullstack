@@ -26,7 +26,7 @@ export interface ICreateCharacter {
 export type UpdateFormData = {
   img: string
   title: string
-  descr: string
+  description: string
 }
 
 interface SetLoadingAction {

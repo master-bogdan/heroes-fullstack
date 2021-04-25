@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Input } from '@material-ui/core';
 
 export const LoginPage = styled.div`
   position: fixed;
@@ -40,7 +41,7 @@ export const LoginForm = styled.form`
   margin: 0 auto;
 `;
 
-export const Input = styled.input`
+export const InputStyled = styled(Input)`
   width: 100%;
   height: 30px;
   margin: 10px 0;

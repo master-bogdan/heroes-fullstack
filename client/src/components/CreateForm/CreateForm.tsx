@@ -1,11 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  reduxForm,
-  reset,
-  InjectedFormProps,
-  formValueSelector,
-} from 'redux-form';
 import {
   Overlay,
   Title,
@@ -22,22 +16,31 @@ import { ICreateCharacter } from 'store/crud/crudTypes';
 
 interface FormProps {
   modalOpen: boolean
-  setModalOpen: (modalOpen: boolean) => typeof modalOpen
+  setModalOpen: (modalOpen: boolean) => void
 }
 
-const CreateForm: React.FC<InjectedFormProps<ICreateCharacter> & FormProps> = ({
+const CreateForm: React.FC<FormProps> = ({
   modalOpen,
   setModalOpen,
-  handleSubmit,
-  pristine,
-  submitting,
 }) => {
   const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    image: '',
+    title: '',
+    description: '',
+  });
 
-  const handleSubmitTest = (values: ICreateCharacter) => {
-    dispatch(CreateCharacter(values));
-    dispatch(reset('createForm'));
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(CreateCharacter(formData));
     setModalOpen(!modalOpen);
+  };
+
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const closeHandler = () => {
@@ -48,32 +51,31 @@ const CreateForm: React.FC<InjectedFormProps<ICreateCharacter> & FormProps> = ({
     <Overlay
       modalOpen={modalOpen}
     >
-      <Form onSubmit={handleSubmit((val) => handleSubmitTest(val))}>
+      <Form onSubmit={handleSubmit}>
         <Title>Create Your Favorite Character</Title>
         <Label htmlFor="image">Insert your link to Image</Label>
         <ImgInput
           name="image"
           type="text"
-          component="input"
           required
+          onChange={changeHandler}
         />
         <Label htmlFor="title">Write character title</Label>
         <TitleInput
           name="title"
           type="text"
-          component="input"
           required
+          onChange={changeHandler}
         />
         <Label htmlFor="description">Write character description</Label>
         <DescrInput
           name="description"
           type="textarea"
-          component="textarea"
           required
+          onChange={changeHandler}
         />
         <SubmitButton
           type="submit"
-          disabled={pristine || submitting}
         >
           Create
         </SubmitButton>
@@ -88,7 +90,4 @@ const CreateForm: React.FC<InjectedFormProps<ICreateCharacter> & FormProps> = ({
   );
 };
 
-export default reduxForm<InjectedFormProps, any>({
-  // a unique name for the form
-  form: 'createForm',
-})(CreateForm);
+export default CreateForm;

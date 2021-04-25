@@ -35,7 +35,6 @@ const UserSchema = new Schema({
   characters: [CharacterSchema],
   dateCreated: {
     type: Date,
-    default: Date.now,
   },
   token: String,
 });

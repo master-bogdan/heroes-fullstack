@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 
 const auth = express.Router();
@@ -20,32 +20,28 @@ auth.post('/login', async (req: Request, res: Response) => {
       });
     }
 
-    return bcrypt.compare(password, user.password, (error, response) => {
-      if (error) {
-        return res.status(404).json({
-          message: 'Wrong password',
-          response: 'failed',
-        });
-      }
+    const isValidPassword = await bcrypt.compare(password, user.password);
 
-      if (response) {
-        const accessToken = jwt.sign(
-          { email: user.email },
-          accessTokenSecret,
-          { expiresIn: '30m' },
-        );
-
-        return res.status(201).json({
-          message: 'Authenticated',
-          response: 'success',
-          token: accessToken,
-        });
-      }
-
-      return res.status(401).json({
+    if (!isValidPassword) {
+      return res.status(403).json({
         message: 'Wrong password',
         response: 'failed',
       });
+    }
+
+    const accessToken = jwt.sign(
+      { email: user.email },
+      accessTokenSecret,
+      { expiresIn: '30m' },
+    );
+
+    user.token = accessToken;
+    await user.save();
+
+    return res.status(201).json({
+      message: 'Authenticated',
+      response: 'success',
+      token: accessToken,
     });
   } catch (error) {
     console.log(error);
@@ -70,12 +66,14 @@ auth.post('/register', async (req: Request, res: Response) => {
     const user = new User({
       email,
       password: hash,
+      dateCreated: Date.now(),
     });
-    const savedUser = await user.save();
+
+    await user.save();
 
     return res.status(201).json({
       message: 'User successfully created!',
-      response: savedUser,
+      response: 'success',
     });
   } catch (error) {
     console.log(error);

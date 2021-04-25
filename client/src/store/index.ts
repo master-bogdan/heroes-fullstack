@@ -4,19 +4,16 @@ import {
   combineReducers,
   Action,
   Store,
-  Middleware,
 } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxThunk, { ThunkAction } from 'redux-thunk';
 // Reducers
-import { reducer as formReducer } from 'redux-form';
 import crudReducer from './crud/crudReducer';
 import authReducer from './auth/authReducer';
 
 const rootReducer = combineReducers({
   crud: crudReducer,
   auth: authReducer,
-  form: formReducer,
 });
 
 // middleware

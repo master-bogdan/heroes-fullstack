@@ -37,7 +37,13 @@ export const deleteCharacterAction = (): CrudActions => ({
 export const FetchCharacters = (): AppThunk => async (dispatch) => {
   try {
     dispatch(loadingCharactersAction(true));
-    const { data } = await axios.get(process.env.REACT_APP_URL);
+    const token = await localStorage.getItem('authToken');
+
+    const { data } = await axios.get(process.env.REACT_APP_URL, {
+      headers: {
+        'Authorization': `${token}`,
+      },
+    });
     dispatch(fetchCharactersAction(data));
   } catch (error) {
     console.log(error);
@@ -48,9 +54,14 @@ export const FetchCharacters = (): AppThunk => async (dispatch) => {
 
 export const CreateCharacter = (char: ICreateCharacter): AppThunk => async (dispatch) => {
   try {
-    const { data } = await axios.post(process.env.REACT_APP_URL, {
-      char,
-    });
+    const token = await localStorage.getItem('authToken');
+
+    const { data } = await axios.post(process.env.REACT_APP_URL, { char },
+      {
+        headers: {
+          'Authorization': `${token}`,
+        },
+      });
     dispatch(createCharacterAction());
     dispatch(FetchCharacters());
     return data;
@@ -65,13 +76,20 @@ export const UpdateCharacter = (
   values: UpdateFormData,
 ): AppThunk => async (dispatch) => {
   try {
-    const { data } = await axios.put(process.env.REACT_APP_URL, {
-      id,
-      char: { ...values },
-    });
+    const token = await localStorage.getItem('authToken');
+
+    const { data } = await axios.put(process.env.REACT_APP_URL,
+      {
+        id,
+        char: { ...values },
+      },
+      {
+        headers: {
+          'Authorization': `${token}`,
+        },
+      });
     dispatch(updateCharacterAction());
     dispatch(FetchCharacters());
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -79,9 +97,16 @@ export const UpdateCharacter = (
 
 export const DeleteCharacter = (id: string): AppThunk => async (dispatch) => {
   try {
-    const { data } = await axios.delete(process.env.REACT_APP_URL, { data: { id } });
+    const token = await localStorage.getItem('authToken');
+
+    const { data } = await axios.delete(process.env.REACT_APP_URL,
+      {
+        data: { id },
+        headers: {
+          'Authorization': `${token}`,
+        },
+      });
     dispatch(FetchCharacters());
-    console.log(data);
   } catch (error) {
     console.log(error);
   }

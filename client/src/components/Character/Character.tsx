@@ -19,17 +19,17 @@ interface Props {
   id: string
   img: string
   title: string
-  descr: string
+  description: string
 }
 
 const Character: React.FC<Props> = ({
-  id, img, title, descr,
+  id, img, title, description,
 }) => {
   const [isEdit, setIsEdit] = useState <boolean>(false);
   const [values, setValue] = useState <UpdateFormData>({
     img,
     title,
-    descr,
+    description,
   });
 
   const dispatch = useDispatch();
@@ -68,8 +68,8 @@ const Character: React.FC<Props> = ({
               onChange={handleChange}
             />
             <DescrFormField
-              name="descr"
-              value={values.descr}
+              name="description"
+              value={values.description}
               onChange={handleChange}
             />
             <CardEditButton
@@ -89,7 +89,7 @@ const Character: React.FC<Props> = ({
           <Card>
             <CardImg src={img} />
             <CardTitle>{title}</CardTitle>
-            <CardDescr>{descr}</CardDescr>
+            <CardDescr>{description}</CardDescr>
             <CardEditButton
               onClick={() => setIsEdit(!isEdit)}
             >

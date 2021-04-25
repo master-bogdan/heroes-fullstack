@@ -47,7 +47,7 @@ const Main: React.FC = () => {
                 id={item._id}
                 img={item.image}
                 title={item.title}
-                descr={item.description}
+                description={item.description}
               />
             ))}
         </Container>
