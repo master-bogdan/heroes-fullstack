@@ -6,7 +6,7 @@ import {
   Wrapper,
   Title,
   LoginForm,
-  Input,
+  InputStyled,
   LoginButton,
   RegisterLink,
 } from './styles';
@@ -49,13 +49,13 @@ const Login: React.FC = () => {
           Please Login
         </Title>
         <LoginForm onSubmit={submitHandler}>
-          <Input
+          <InputStyled
             onChange={changeHandler}
             type="text"
             placeholder="Email"
             name="email"
           />
-          <Input
+          <InputStyled
             onChange={changeHandler}
             type="password"
             placeholder="Password"

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Field } from 'redux-form';
+import { InputBase } from '@material-ui/core';
 import { CardEditButton } from '../Ui/Buttons';
 
 export const Overlay = styled.div`
@@ -43,13 +43,13 @@ export const Label = styled.label`
     text-transform: uppercase;
 `;
 
-export const ImgInput: any = styled(Field)`
+export const ImgInput = styled(InputBase)`
     width: 80%;
     height: 30px;
     margin: 10px 0;
 `;
 export const TitleInput = styled(ImgInput)``;
-export const DescrInput: any = styled(Field)`
+export const DescrInput = styled(InputBase)`
     width: 80%;
     min-height: 150px;
     margin-top: 10px;

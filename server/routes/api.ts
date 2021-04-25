@@ -1,13 +1,15 @@
 import express, { Request, Response } from 'express';
-import { Character } from '../models/Character';
+import checkAuth from '../middleware/checkAuth';
+import findUser from '../utils/findUser';
 
 const api = express.Router();
 
-api.get('/api', async (req: Request, res: Response) => {
+api.get('/api', checkAuth, async (req: Request, res: Response) => {
   try {
-    const characters = await Character.find();
-    if (characters) {
-      res.status(200).json(characters);
+    const user: any = await findUser(req, res);
+
+    if (user.characters) {
+      res.status(200).json(user.characters);
     } else {
       res.status(404).json({ response: 'not found' });
     }
@@ -17,16 +19,18 @@ api.get('/api', async (req: Request, res: Response) => {
   }
 });
 
-api.post('/api', async (req: Request, res: Response) => {
+api.post('/api', checkAuth, async (req: Request, res: Response) => {
   try {
     const { char } = req.body;
+    const user: any = await findUser(req, res);
+
     if (char !== null && char !== undefined) {
-      const character = new Character({
+      user.characters.push({
         title: char.title,
         image: char.image,
         description: char.description,
       });
-      await character.save();
+      await user.save();
       res.status(200).json({ response: 'success' });
     } else {
       res.status(404);
@@ -38,32 +42,32 @@ api.post('/api', async (req: Request, res: Response) => {
   }
 });
 
-api.put('/api', async (req: Request, res: Response) => {
+api.put('/api', checkAuth, async (req: Request, res: Response) => {
   try {
     const { id, char } = req.body;
-    await Character.findByIdAndUpdate(id, { ...char }, null, (error) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json({ response: error });
-      }
-      res.status(200).json({ response: 'success' });
-    });
+
+    const user: any = await findUser(req, res);
+    const character = await user.characters.id(id);
+
+    character.set({ ...char });
+    await user.save();
+
+    res.status(200).json({ response: 'success' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ response: error });
   }
 });
 
-api.delete('/api', async (req: Request, res: Response) => {
+api.delete('/api', checkAuth, async (req: Request, res: Response) => {
   try {
     const { id } = req.body;
-    await Character.findByIdAndDelete(id, null, (error) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json({ response: error });
-      }
-      res.status(200).json({ response: 'success' });
-    });
+    const user: any = await findUser(req, res);
+    await user.characters.id(id).remove();
+
+    await user.save();
+
+    res.status(200).json({ response: 'success' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ response: error });

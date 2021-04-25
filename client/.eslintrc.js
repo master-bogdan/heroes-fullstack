@@ -45,5 +45,6 @@ module.exports = {
     'no-undef': 1,
     'no-underscore-dangle': 0,
     'no-explicit-any': 0,
+    'quote-props': 0,
   },
 };
