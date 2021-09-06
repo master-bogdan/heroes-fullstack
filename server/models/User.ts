@@ -3,21 +3,14 @@ import {
   Schema,
   model,
 } from 'mongoose';
-import { ICharacter } from './Character';
 
 export interface IUser extends Document {
-  email: string
-  password: string
-  characters: ICharacter[]
-  dateCreated: Date,
-  token: string
+  email: string;
+  password: string;
+  characters: string[];
+  dateCreated: Date;
+  token: string;
 }
-
-const CharacterSchema = new Schema({
-  title: String,
-  description: String,
-  image: String,
-});
 
 const UserSchema = new Schema({
   email: {
@@ -32,7 +25,7 @@ const UserSchema = new Schema({
     min: 6,
     max: 1024,
   },
-  characters: [CharacterSchema],
+  characters: [{ type: Schema.Types.ObjectId, ref: 'Characters' }],
   dateCreated: {
     type: Date,
   },

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -20,7 +20,12 @@ app.use(cors());
 app.use(auth);
 
 // API
-app.use(api);
+app.use('/api', api);
+
+// Error handling
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).json({ message: err.message });
+});
 
 const start = async () => {
   try {

@@ -6,7 +6,7 @@ import {
 } from './crudTypes';
 
 const initialState: CrudState = {
-  data: [],
+  characters: [],
   isLoading: false,
 };
 
@@ -15,7 +15,7 @@ const readReducer = (state = initialState, action: CrudActions): CrudState => {
     case READ_CHARACTERS:
       return {
         ...state,
-        data: action.payload,
+        characters: action.payload,
       };
     case LOADING_CHARACTERS:
       return {

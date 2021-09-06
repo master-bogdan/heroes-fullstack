@@ -6,7 +6,7 @@ export const UPDATE_CHARACTER = 'UPDATE_CHARACTER';
 export const DELETE_CHARACTER = 'DELETE_CHARACTER';
 
 export interface CrudState {
-  data: ICharacter[]
+  characters: ICharacter[]
   isLoading: boolean
 }
 
