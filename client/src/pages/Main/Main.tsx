@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useTypeSelector } from 'hooks/useTypeSelector';
 // Styles
 import {
   MainBlock,
@@ -13,12 +14,11 @@ import Spinner from 'components/Spinner';
 // Actions
 import { FetchCharacters } from 'store/crud/crudActions';
 // Types
-import { RootState } from 'store';
 import { ICharacter } from 'store/crud/crudTypes';
 
 const Main: React.FC = () => {
   const dispatch = useDispatch();
-  const { data, isLoading } = useSelector((state: RootState) => state.crud);
+  const { characters, isLoading } = useTypeSelector(({ crud }) => crud);
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -40,8 +40,8 @@ const Main: React.FC = () => {
         <Spinner />
       ) : (
         <Container>
-          {(data.length !== 0 && data !== undefined)
-            && data.map((item: ICharacter) => (
+          {(characters.length !== 0 && characters !== undefined)
+            && characters.map((item: ICharacter) => (
               <Character
                 key={item._id}
                 id={item._id}

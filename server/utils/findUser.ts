@@ -1,32 +1,23 @@
-import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/User';
+import { IUser, User } from '../models/User';
 
-const findUser = async (
-  req: Request,
-  res: Response,
-) => {
-  const token = req.headers.authorization;
+const findUser = async (token: string | undefined): Promise<IUser | null> => {
+  if (!token) {
+    throw new Error('Token not valid!');
+  }
+
   try {
-    if (token) {
-      const decoded = jwt.decode(token, { complete: true });
-      const user = await User.findOne({ email: decoded?.payload.email });
+    const decoded = jwt.decode(token, { complete: true });
+    const user = await User.findOne({ email: decoded?.payload.email });
 
-      if (user) {
-        return user;
-      }
+    if (user) {
+      return user;
     }
 
-    return res.status(403).json({
-      message: 'You must be authorized',
-      response: 'failed',
-    });
+    return null;
   } catch (error) {
     console.log(error);
-    return res.status(403).json({
-      message: 'You must be authorized',
-      response: 'failed',
-    });
+    return null;
   }
 };
 

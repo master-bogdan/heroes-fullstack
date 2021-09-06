@@ -8,24 +8,27 @@ const checkAuth = async (
   next: NextFunction,
 ) => {
   const token = req.headers.authorization;
-  try {
-    if (token) {
-      const decoded = jwt.decode(token, { complete: true });
-      const user = await User.findOne({ email: decoded?.payload.email });
 
-      if (user?.token === token) {
-        next();
-      } else {
-        res.status(403).json({
-          message: 'You must be authorized',
-          response: 'failed',
-        });
-      }
+  if (!token) {
+    throw new Error('Token not valid!');
+  }
+
+  try {
+    const decoded = jwt.decode(token, { complete: true });
+    const user = await User.findOne({ email: decoded?.payload.email });
+
+    if (user?.token === token) {
+      return next();
     }
+
+    return res.status(403).json({
+      message: 'You must be authorized',
+      response: 'failed',
+    });
   } catch (error) {
     console.log(error);
-    res.status(403).json({
-      message: 'You must be authorized',
+    return res.status(500).json({
+      message: error,
       response: 'failed',
     });
   }

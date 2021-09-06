@@ -34,7 +34,7 @@ export const loginAction = (user: User): AppThunk => async (dispatch) => {
 
     return data;
   } catch (error) {
-    console.log(error.response.data);
-    return error.response.data;
+    console.log(error);
+    return error;
   }
 };
