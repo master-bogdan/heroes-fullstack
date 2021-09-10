@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+// Components
+import { LoginForm } from 'components/Ui/Forms';
+import { LoginTitle } from 'components/Ui/Typography';
+import { InputStyled } from 'components/Ui/Inputs';
+import { LoginButton } from 'components/Ui/Buttons';
+// Styles
 import {
   LoginPage,
   Wrapper,
-  Title,
-  LoginForm,
-  Input,
-  LoginButton,
   RegisterLink,
 } from './styles';
 
@@ -35,25 +37,28 @@ const Register: React.FC = () => {
   return (
     <LoginPage>
       <Wrapper>
-        <Title>
-          Welcome to favorite character app
-        </Title>
+        <LoginTitle>
+          Welcome to favorite character app <br />
+          Please register your account
+        </LoginTitle>
         <LoginForm onSubmit={submitHandler}>
-          <Input
+          <InputStyled
             onChange={changeHandler}
             type="text"
             placeholder="Email"
             name="email"
           />
-          <Input
+          <InputStyled
             onChange={changeHandler}
             type="password"
             placeholder="Password"
             name="password"
           />
-          <LoginButton type="submit">Create account</LoginButton>
+          <LoginButton type="submit">
+            Create account
+          </LoginButton>
           <RegisterLink to="/login">
-            Log in
+            Return to Login
           </RegisterLink>
         </LoginForm>
       </Wrapper>

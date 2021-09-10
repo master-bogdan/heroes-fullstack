@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+// Actions
+import { loginAction } from 'store/auth/authActions';
+// Components
+import { LoginForm } from 'components/Ui/Forms';
+import { LoginTitle } from 'components/Ui/Typography';
+import { InputStyled } from 'components/Ui/Inputs';
+import { LoginButton } from 'components/Ui/Buttons';
+// Styles
 import {
   LoginPage,
   Wrapper,
-  Title,
-  LoginForm,
-  InputStyled,
-  LoginButton,
   RegisterLink,
 } from './styles';
-import { loginAction } from 'store/auth/authActions';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,10 +47,10 @@ const Login: React.FC = () => {
   return (
     <LoginPage>
       <Wrapper>
-        <Title>
-          Welcome to favorite character app
+        <LoginTitle>
+          Welcome to favorite character app <br />
           Please Login
-        </Title>
+        </LoginTitle>
         <LoginForm onSubmit={submitHandler}>
           <InputStyled
             onChange={changeHandler}
@@ -61,7 +64,9 @@ const Login: React.FC = () => {
             placeholder="Password"
             name="password"
           />
-          <LoginButton type="submit">Log in</LoginButton>
+          <LoginButton type="submit">
+            Log in
+          </LoginButton>
           <RegisterLink to="/register">
             Create Account
           </RegisterLink>
