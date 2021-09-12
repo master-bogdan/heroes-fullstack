@@ -6,3 +6,13 @@ export const LoginTitle = styled.h1`
   margin-bottom: 20px;
   text-align: center;
 `;
+
+export const ErrorText = styled.small`
+  text-align: center;
+  color: red;
+`;
+
+export const SuccessText = styled.small`
+  text-align: center;
+  color: green;
+`;

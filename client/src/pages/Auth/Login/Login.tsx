@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useTypeSelector } from 'hooks/useTypeSelector';
 import { useHistory } from 'react-router';
 // Actions
-import { loginAction } from 'store/auth/authActions';
+import { loginAction, setAuthErrorAction } from 'store/auth/authActions';
 // Components
 import { LoginForm } from 'components/Ui/Forms';
-import { LoginTitle } from 'components/Ui/Typography';
+import { LoginTitle, ErrorText } from 'components/Ui/Typography';
 import { InputStyled } from 'components/Ui/Inputs';
 import { LoginButton } from 'components/Ui/Buttons';
 // Styles
@@ -19,20 +19,22 @@ import {
 const Login: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLogin } = useTypeSelector(({ auth }) => auth);
+  const { error, isLogin } = useTypeSelector(({ auth }) => auth);
+
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setAuthErrorAction(''));
     setLoginData({
       ...loginData,
       [event.currentTarget.name]: event.currentTarget.value,
     });
   };
 
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(loginAction(loginData));
   };
@@ -51,17 +53,24 @@ const Login: React.FC = () => {
           Please Login
         </LoginTitle>
         <LoginForm onSubmit={submitHandler}>
+          {error && (
+            <ErrorText>
+              {error}
+            </ErrorText>
+          )}
           <InputStyled
             onChange={changeHandler}
-            type="text"
+            type="email"
             placeholder="Email"
             name="email"
+            required
           />
           <InputStyled
             onChange={changeHandler}
             type="password"
             placeholder="Password"
             name="password"
+            required
           />
           <LoginButton type="submit">
             Log in

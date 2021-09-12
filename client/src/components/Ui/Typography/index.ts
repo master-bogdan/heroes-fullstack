@@ -1,3 +1,3 @@
-import { LoginTitle } from './Typography';
+import { LoginTitle, ErrorText, SuccessText } from './Typography';
 
-export { LoginTitle };
+export { LoginTitle, ErrorText, SuccessText };

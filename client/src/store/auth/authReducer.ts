@@ -1,6 +1,7 @@
 import {
   AUTH_SET,
   AUTH_SET_LOADING,
+  AUTH_SET_REGISTER,
   AUTH_ERROR,
   AuthState,
   AuthActions,
@@ -9,7 +10,8 @@ import {
 const initialState: AuthState = {
   isLogin: false,
   isLoading: false,
-  isError: false,
+  isRegister: false,
+  error: '',
 };
 
 const authReducer = (
@@ -27,10 +29,15 @@ const authReducer = (
         ...state,
         isLoading: action.payload,
       };
+    case AUTH_SET_REGISTER:
+      return {
+        ...state,
+        isRegister: action.payload,
+      };
     case AUTH_ERROR:
       return {
         ...state,
-        isError: action.payload,
+        error: action.payload,
       };
     default:
       return state;
