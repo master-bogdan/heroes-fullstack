@@ -1,10 +1,8 @@
-export const READ_CHARACTERS = 'READ_CHARACTERS';
-export const LOADING_CHARACTERS = 'LOADING_CHARACTERS';
-
-export const CREATE_CHARACTER = 'CREATE_CHARACTER';
-export const UPDATE_CHARACTER = 'UPDATE_CHARACTER';
-export const DELETE_CHARACTER = 'DELETE_CHARACTER';
-
+export const CRUD_CHARACTERS_FETCH = 'CRUD_CHARACTERS_FETCH';
+export const CRUD_LOADING = 'CRUD_CHARACTERS_LOADING';
+export const CRUD_CHARACTER_CREATE = 'CRUD_CHARACTER_CREATE';
+export const CRUD_CHARACTER_UPDATE = 'CRUD_CHARACTER_UPDATE';
+export const CRUD_CHARACTER_DELETE = 'CRUD_CHARACTER_DELETE';
 export interface CrudState {
   characters: ICharacter[]
   isLoading: boolean
@@ -30,24 +28,27 @@ export type UpdateFormData = {
 }
 
 interface SetLoadingAction {
-  type: typeof LOADING_CHARACTERS
-  payload: boolean
+  type: typeof CRUD_LOADING;
+  payload: boolean;
 }
 interface SetCharactersAction {
-  type: typeof READ_CHARACTERS
-  payload: ICharacter[]
+  type: typeof CRUD_CHARACTERS_FETCH;
+  payload: ICharacter[];
 }
 
 interface AddCharacterAction {
-  type: typeof CREATE_CHARACTER
+  type: typeof CRUD_CHARACTER_CREATE;
+  payload: ICharacter;
 }
 
 interface UpdateCharacterAction {
-  type: typeof UPDATE_CHARACTER
+  type: typeof CRUD_CHARACTER_UPDATE;
+  payload: ICharacter;
 }
 
 interface DeleteCharacterAction {
-  type: typeof DELETE_CHARACTER
+  type: typeof CRUD_CHARACTER_DELETE;
+  payload: string;
 }
 
 export type CrudActions =

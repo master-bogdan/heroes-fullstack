@@ -45,7 +45,7 @@ const Register: React.FC = () => {
         history.push('/login');
       }, 5000);
     }
-  }, [isRegister]);
+  }, [isRegister, dispatch]);
 
   return (
     <LoginPage>

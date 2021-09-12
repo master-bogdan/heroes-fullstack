@@ -1,9 +1,9 @@
 import {
-  READ_CHARACTERS,
-  LOADING_CHARACTERS,
-  CREATE_CHARACTER,
-  UPDATE_CHARACTER,
-  DELETE_CHARACTER,
+  CRUD_CHARACTERS_FETCH,
+  CRUD_LOADING,
+  CRUD_CHARACTER_CREATE,
+  CRUD_CHARACTER_UPDATE,
+  CRUD_CHARACTER_DELETE,
   CrudActions,
   ICharacter,
   ICreateCharacter,
@@ -11,27 +11,31 @@ import {
 } from './crudTypes';
 import axios from 'axios';
 import { AppThunk } from 'store';
+import { API } from 'services/api';
 
-export const loadingCharactersAction = (data: boolean): CrudActions => ({
-  type: LOADING_CHARACTERS,
-  payload: data,
+export const loadingCharactersAction = (payload: boolean): CrudActions => ({
+  type: CRUD_LOADING,
+  payload,
 });
 
-export const fetchCharactersAction = (data: ICharacter[]): CrudActions => ({
-  type: READ_CHARACTERS,
-  payload: data,
+export const fetchCharactersAction = (payload: ICharacter[]): CrudActions => ({
+  type: CRUD_CHARACTERS_FETCH,
+  payload,
 });
 
-export const createCharacterAction = (): CrudActions => ({
-  type: CREATE_CHARACTER,
+export const createCharacterAction = (payload: ICharacter): CrudActions => ({
+  type: CRUD_CHARACTER_CREATE,
+  payload,
 });
 
-export const updateCharacterAction = (): CrudActions => ({
-  type: UPDATE_CHARACTER,
+export const updateCharacterAction = (payload: ICharacter): CrudActions => ({
+  type: CRUD_CHARACTER_UPDATE,
+  payload,
 });
 
-export const deleteCharacterAction = (): CrudActions => ({
-  type: DELETE_CHARACTER,
+export const deleteCharacterAction = (payload: string): CrudActions => ({
+  type: CRUD_CHARACTER_DELETE,
+  payload,
 });
 
 export const FetchCharacters = (): AppThunk => async (dispatch) => {
@@ -39,7 +43,7 @@ export const FetchCharacters = (): AppThunk => async (dispatch) => {
     dispatch(loadingCharactersAction(true));
     const token = await localStorage.getItem('authToken');
 
-    const { data } = await axios.get(process.env.REACT_APP_URL, {
+    const { data } = await API.get('/api', {
       headers: {
         'Authorization': `${token}`,
       },
@@ -56,13 +60,13 @@ export const CreateCharacter = (char: ICreateCharacter): AppThunk => async (disp
   try {
     const token = await localStorage.getItem('authToken');
 
-    const { data } = await axios.post(process.env.REACT_APP_URL, { char },
+    const { data } = await API.post('/api', { char },
       {
         headers: {
           'Authorization': `${token}`,
         },
       });
-    dispatch(createCharacterAction());
+    // dispatch(createCharacterAction());
     dispatch(FetchCharacters());
     return data;
   } catch (error) {
@@ -88,7 +92,7 @@ export const UpdateCharacter = (
           'Authorization': `${token}`,
         },
       });
-    dispatch(updateCharacterAction());
+    // dispatch(updateCharacterAction());
     dispatch(FetchCharacters());
   } catch (error) {
     console.log(error);

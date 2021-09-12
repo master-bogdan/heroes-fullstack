@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CardEditButton, CardDeleteButton } from '../Ui/Buttons';
+// Actions
+import { UpdateCharacter, DeleteCharacter } from 'store/crud/crudActions';
+// Types
+import { UpdateFormData } from 'store/crud/crudTypes';
+// Styles
 import {
   Card,
   CardImg,
@@ -11,9 +16,6 @@ import {
   TitleFormField,
   DescrFormField,
 } from './styles';
-import { UpdateCharacter, DeleteCharacter } from 'store/crud/crudActions';
-// Types
-import { UpdateFormData } from 'store/crud/crudTypes';
 
 interface Props {
   id: string
@@ -23,16 +25,19 @@ interface Props {
 }
 
 const Character: React.FC<Props> = ({
-  id, img, title, description,
+  id,
+  img,
+  title,
+  description,
 }) => {
+  const dispatch = useDispatch();
+
   const [isEdit, setIsEdit] = useState <boolean>(false);
   const [values, setValue] = useState <UpdateFormData>({
     img,
     title,
     description,
   });
-
-  const dispatch = useDispatch();
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -51,53 +56,50 @@ const Character: React.FC<Props> = ({
     dispatch(DeleteCharacter(id));
   };
 
+  if (isEdit) {
+    return (
+      <Form onSubmit={onSubmit}>
+        <ImageFormField
+          name="image"
+          value={values.img}
+          onChange={handleChange}
+        />
+        <TitleFormField
+          name="title"
+          value={values.title}
+          onChange={handleChange}
+        />
+        <DescrFormField
+          name="description"
+          value={values.description}
+          onChange={handleChange}
+        />
+        <CardEditButton
+          type="submit"
+        >
+          Update
+        </CardEditButton>
+        <CardDeleteButton
+          type="button"
+          onClick={deleteChar}
+        >
+          Delete
+        </CardDeleteButton>
+      </Form>
+    );
+  }
+
   return (
-    <>
-      { isEdit
-        ? (
-          <Form onSubmit={onSubmit}>
-            <CardImg src={img} />
-            <ImageFormField
-              name="image"
-              value={values.img}
-              onChange={handleChange}
-            />
-            <TitleFormField
-              name="title"
-              value={values.title}
-              onChange={handleChange}
-            />
-            <DescrFormField
-              name="description"
-              value={values.description}
-              onChange={handleChange}
-            />
-            <CardEditButton
-              type="submit"
-            >
-              Update
-            </CardEditButton>
-            <CardDeleteButton
-              type="button"
-              onClick={deleteChar}
-            >
-              Delete
-            </CardDeleteButton>
-          </Form>
-        )
-        : (
-          <Card>
-            <CardImg src={img} />
-            <CardTitle>{title}</CardTitle>
-            <CardDescr>{description}</CardDescr>
-            <CardEditButton
-              onClick={() => setIsEdit(!isEdit)}
-            >
-              Edit
-            </CardEditButton>
-          </Card>
-        )}
-    </>
+    <Card>
+      <CardImg src={img} alt="If you see it, that means you have wrong image url" />
+      <CardTitle>{title}</CardTitle>
+      <CardDescr>{description}</CardDescr>
+      <CardEditButton
+        onClick={() => setIsEdit(!isEdit)}
+      >
+        Edit
+      </CardEditButton>
+    </Card>
   );
 };
 

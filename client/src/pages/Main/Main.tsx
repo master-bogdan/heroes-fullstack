@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypeSelector } from 'hooks/useTypeSelector';
-// Styles
-import {
-  MainBlock,
-} from './styles';
+import Grid from '@material-ui/core/Grid';
 // Components
 import Header from 'components/Header';
 import CreateForm from 'components/CreateForm';
@@ -15,6 +12,11 @@ import Spinner from 'components/Spinner';
 import { FetchCharacters } from 'store/crud/crudActions';
 // Types
 import { ICharacter } from 'store/crud/crudTypes';
+// Styles
+import {
+  MainBlock,
+  ContentWrapper,
+} from './styles';
 
 const Main: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     dispatch(FetchCharacters());
-  }, [dispatch]);
+  }, []);
 
   return (
     <MainBlock>
@@ -39,7 +41,7 @@ const Main: React.FC = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <Container>
+        <ContentWrapper>
           {(characters.length !== 0 && characters !== undefined)
             && characters.map((item: ICharacter) => (
               <Character
@@ -50,7 +52,7 @@ const Main: React.FC = () => {
                 description={item.description}
               />
             ))}
-        </Container>
+        </ContentWrapper>
       )}
     </MainBlock>
   );

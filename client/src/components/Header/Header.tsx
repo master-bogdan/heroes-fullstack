@@ -7,11 +7,15 @@ import { HeaderButton } from '../Ui/Buttons';
 // Actions
 import { setLoginAction } from 'store/auth/authActions';
 // Styles
-import { Block, Logo } from './styles';
+import {
+  Block,
+  Logo,
+  ButtonGroup,
+} from './styles';
 
 interface Props {
-  modalOpen: any;
-  setModalOpen: any;
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Header: React.FC<Props> = ({ modalOpen, setModalOpen }) => {
@@ -28,16 +32,20 @@ const Header: React.FC<Props> = ({ modalOpen, setModalOpen }) => {
     <Block>
       <Container>
         <Logo>CRUD CHARACTER APP</Logo>
-        <HeaderButton
-          onClick={() => setModalOpen(!modalOpen)}
-        >
-          Add new character
-        </HeaderButton>
-        <HeaderButton
-          onClick={logoutHandler}
-        >
-          Logout
-        </HeaderButton>
+        <ButtonGroup>
+          <HeaderButton
+            bg="black"
+            onClick={() => setModalOpen(!modalOpen)}
+          >
+            Add new character
+          </HeaderButton>
+          <HeaderButton
+            bg="brown"
+            onClick={logoutHandler}
+          >
+            Logout
+          </HeaderButton>
+        </ButtonGroup>
       </Container>
     </Block>
   );

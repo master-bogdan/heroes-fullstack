@@ -1,37 +1,41 @@
 import styled from 'styled-components';
 
-export const HeaderButton = styled.button`
+const BaseButton = styled.button`
   display: block;
-  padding: 5px;
-  background: black;
+  padding: 10px;
+  outline: none;
+  border: none;
   color: white;
   border-radius: 5px;
   cursor: pointer;
-  text-transform: uppercase;
+
+  transition: 0.3s;
 
   &:hover {
-      opacity: 0.8;
+    opacity: 0.5;
   }
 `;
 
-export const CardEditButton = styled.button`
-  display: block;
-  width: 100%;
-  padding: 10px 15px;
-  margin-top: 10px;
-  text-align: center;
-  cursor: pointer;
-  background: black;
-  color: white;
-  border-radius: 5px;
+export const HeaderButton = styled(BaseButton)<{ bg?: string }>`
+  background-color: ${({ bg }) => bg};
   text-transform: uppercase;
-  &:hover {
-      opacity: 0.7;
+
+  &:first-child {
+    margin-right: 15px;
   }
+`;
+
+export const CardEditButton = styled(BaseButton)`
+  margin: 0 auto;
+  width: 95%;
+  padding: 10px 15px;
+  text-align: center;
+  background-color: black;
+  text-transform: uppercase;
 `;
 
 export const CardDeleteButton = styled(CardEditButton)`
-    background: brown;
+  background-color: brown;
 `;
 
 export const LoginButton = styled.button`
