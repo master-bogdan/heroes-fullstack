@@ -1,13 +1,15 @@
 import {
-  SET_AUTH,
-  CHECK_AUTH,
+  AUTH_SET,
+  AUTH_SET_LOADING,
+  AUTH_ERROR,
   AuthState,
   AuthActions,
 } from './authTypes';
 
 const initialState: AuthState = {
   isLogin: false,
-  token: null,
+  isLoading: false,
+  isError: false,
 };
 
 const authReducer = (
@@ -15,17 +17,20 @@ const authReducer = (
   action: AuthActions,
 ): AuthState => {
   switch (action.type) {
-    case SET_AUTH:
+    case AUTH_SET:
       return {
         ...state,
-        isLogin: action.payload.isLogin,
-        token: action.payload.token,
+        isLogin: action.payload,
       };
-    case CHECK_AUTH:
+    case AUTH_SET_LOADING:
       return {
         ...state,
-        isLogin: action.payload.isLogin,
-        token: action.payload.token,
+        isLoading: action.payload,
+      };
+    case AUTH_ERROR:
+      return {
+        ...state,
+        isError: action.payload,
       };
     default:
       return state;

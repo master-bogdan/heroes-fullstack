@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { isExpired } from 'react-jwt';
 import {
   Switch,
@@ -11,61 +11,41 @@ import Main from 'pages/Main';
 import Login from 'pages/Auth/Login';
 import Register from 'pages/Auth/Register';
 // Actions
-import { checkAuthAction } from 'store/auth/authActions';
-// Types
-import { RootState } from 'store';
+import { setLoginAction } from 'store/auth/authActions';
 
 const Router: React.FC = () => {
-  const dispatch = useDispatch();
-  const { isLogin } = useSelector((state: RootState) => state.auth);
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const checkAuth = async () => {
-    try {
-      const token = await localStorage.getItem('authToken');
+  const checkAuth = () => {
+    const token = localStorage.getItem('authToken');
 
-      if (token) {
-        const isTokenExpired = isExpired(token);
+    if (!token) {
+      dispatch(setLoginAction(false));
+      history.push('/login');
+      return;
+    }
 
-        if (!isTokenExpired) {
-          dispatch(checkAuthAction({
-            isLogin: true,
-            token,
-          }));
-        } else {
-          dispatch(checkAuthAction({
-            isLogin: false,
-            token: null,
-          }));
-          localStorage.removeItem('authToken');
-          history.push('/login');
-        }
-      } else {
-        dispatch(checkAuthAction({
-          isLogin: false,
-          token: null,
-        }));
-        history.push('/login');
-      }
-    } catch (error) {
-      console.log(error);
+    const isTokenExpired = isExpired(token);
+
+    if (!isTokenExpired) {
+      dispatch(setLoginAction(true));
+    } else {
+      dispatch(setLoginAction(false));
+      localStorage.removeItem('authToken');
+      history.push('/login');
     }
   };
 
   useEffect(() => {
     checkAuth();
-  }, [dispatch]);
+  }, []);
 
   return (
     <Switch>
-      {isLogin ? (
-        <Route path="/" exact component={Main} />
-      ) : (
-        <>
-          <Route path="/login" exact component={Login} />
-          <Route path="/register" exact component={Register} />
-        </>
-      )}
+      <Route path="/" exact component={Main} />
+      <Route path="/login" exact component={Login} />
+      <Route path="/register" exact component={Register} />
     </Switch>
   );
 };

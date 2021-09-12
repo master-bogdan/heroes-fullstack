@@ -1,25 +1,34 @@
-export const SET_AUTH = 'SET_AUTH';
-export const CHECK_AUTH = 'CHECK_AUTH';
+export const AUTH_SET = 'AUTH_SET';
+export const AUTH_SET_LOADING = 'AUTH_SET_LOADING';
+export const AUTH_ERROR = 'AUTH_ERROR';
 
 export interface AuthState {
-  isLogin: boolean
-  token: string | null
+  isLogin: boolean;
+  isLoading: boolean;
+  isError: boolean;
 }
 
 export type User = {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 interface SetAuthAction {
-  type: typeof SET_AUTH
-  payload: AuthState
+  type: typeof AUTH_SET;
+  payload: boolean;
 }
-interface CheckAuthAction {
-  type: typeof CHECK_AUTH
-  payload: AuthState
+
+interface SetAuthLoadingAction {
+  type: typeof AUTH_SET_LOADING;
+  payload: boolean;
+}
+
+interface SetAuthErrorAction {
+  type: typeof AUTH_ERROR;
+  payload: boolean;
 }
 
 export type AuthActions =
 SetAuthAction |
-CheckAuthAction;
+SetAuthLoadingAction |
+SetAuthErrorAction;

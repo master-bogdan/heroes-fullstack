@@ -1,40 +1,41 @@
 import {
-  SET_AUTH,
-  CHECK_AUTH,
+  AUTH_SET,
+  AUTH_ERROR,
   AuthActions,
   User,
-  AuthState,
 } from './authTypes';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { AppThunk } from 'store';
+import { API } from 'services/api';
 
-export const setLoginAction = (payload: AuthState): AuthActions => ({
-  type: SET_AUTH,
+export const setLoginAction = (payload: boolean): AuthActions => ({
+  type: AUTH_SET,
   payload,
 });
 
-export const checkAuthAction = (payload: AuthState): AuthActions => ({
-  type: CHECK_AUTH,
+export const setAuthErrorAction = (payload: boolean): AuthActions => ({
+  type: AUTH_ERROR,
   payload,
 });
 
 export const loginAction = (user: User): AppThunk => async (dispatch) => {
   try {
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_LOGIN}`,
-      user,
-    );
+    const { data } = await API.post('/login', user);
 
-    if (data.token) {
-      dispatch(setLoginAction({
-        isLogin: true,
-        token: data.token,
-      }));
+    if (typeof data.token !== 'undefined') {
+      localStorage.setItem('authToken', data.token);
+
+      dispatch(setLoginAction(true));
+    } else {
+      dispatch(setAuthErrorAction(true));
     }
-
-    return data;
-  } catch (error) {
-    console.log(error);
-    return error;
+  } catch (error: unknown | AxiosError) {
+    if (axios.isAxiosError(error)) {
+      console.log(error.response);
+      dispatch(setAuthErrorAction(true));
+    } else {
+      console.log(error);
+      dispatch(setAuthErrorAction(true));
+    }
   }
 };

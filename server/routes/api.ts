@@ -4,7 +4,7 @@ import {
   createCharacter,
   updateCharacter,
   deleteCharacter,
-} from '../controllers/api';
+} from '../controllers/api.controller';
 import checkAuth from '../middleware/checkAuth';
 
 const api = Router();

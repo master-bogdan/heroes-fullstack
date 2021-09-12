@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useTypeSelector } from 'hooks/useTypeSelector';
+import { useHistory } from 'react-router';
 // Actions
 import { loginAction } from 'store/auth/authActions';
 // Components
@@ -16,8 +17,9 @@ import {
 } from './styles';
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { isLogin } = useTypeSelector(({ auth }) => auth);
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
@@ -32,17 +34,14 @@ const Login: React.FC = () => {
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const { token, response }: any = await dispatch(loginAction(loginData));
-
-      if (response === 'success') {
-        localStorage.setItem('authToken', token);
-        history.push('/');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(loginAction(loginData));
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      history.push('/');
+    }
+  }, [dispatch, isLogin]);
 
   return (
     <LoginPage>
