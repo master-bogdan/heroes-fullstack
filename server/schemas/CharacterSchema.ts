@@ -10,10 +10,10 @@ export interface ICharacter extends Document {
   image: string
 }
 
-const CharacterSchema = new Schema({
+const characterSchema = new Schema({
   title: String,
   description: String,
   image: String,
 });
 
-export const Character = model<ICharacter>('Character', CharacterSchema);
+export const CharacterSchema = model<ICharacter>('Character', characterSchema);

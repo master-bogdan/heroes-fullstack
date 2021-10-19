@@ -1,9 +1,11 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+
 import api from './routes/api';
 import auth from './routes/auth';
+import { errorController } from './controllers/error.controller';
 
 dotenv.config();
 const app = express();
@@ -18,14 +20,10 @@ app.use(cors());
 
 // Auth
 app.use(auth);
-
 // API
 app.use('/api', api);
-
 // Error handling
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).json({ message: err.message });
-});
+app.use(errorController);
 
 const start = async () => {
   try {

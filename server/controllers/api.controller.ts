@@ -1,19 +1,20 @@
 import { Request, Response } from 'express';
-import { Character } from '../models/Character';
-import findUser from '../utils/findUser';
+
+import { UserModel } from '../models/user.model';
+import { CharacterSchema } from '../schemas/CharacterSchema';
 
 export const getCharacters = async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization;
-    const user = await findUser(token);
+    const user = await UserModel.findUserWithToken(token);
 
     if (user) {
-      await user.populate({
+      const characters = await user.populate({
         path: 'characters',
-        model: Character,
-      }).execPopulate();
+        model: CharacterSchema,
+      });
 
-      return res.status(200).json(user.characters);
+      return res.status(200).json(characters);
     }
 
     return res.status(404).json({ response: 'not found' });
@@ -26,12 +27,12 @@ export const getCharacters = async (req: Request, res: Response) => {
 export const createCharacter = async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization;
-    const user = await findUser(token);
+    const user = await UserModel.findUserWithToken(token);
 
     const { char } = req.body;
 
     if (char !== null && char !== undefined) {
-      const character = new Character({
+      const character = new CharacterSchema({
         title: char.title,
         image: char.image,
         description: char.description,
@@ -61,7 +62,7 @@ export const updateCharacter = async (req: Request, res: Response) => {
     const token = req.headers.authorization;
     const { id } = req.params;
     const { char } = req.body;
-    const user = await findUser(token);
+    const user = await UserModel.findUserWithToken(token);
 
     if (user) {
       // @ts-ignore
@@ -83,7 +84,7 @@ export const updateCharacter = async (req: Request, res: Response) => {
 export const deleteCharacter = async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization;
-    const user = await findUser(token);
+    const user = await UserModel.findUserWithToken(token);
 
     const { id } = req.params;
 

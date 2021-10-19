@@ -1,20 +1,21 @@
 import { Router } from 'express';
+
+import { UserModel } from '../models/user.model';
 import {
   getCharacters,
   createCharacter,
   updateCharacter,
   deleteCharacter,
 } from '../controllers/api.controller';
-import checkAuth from '../middleware/checkAuth';
 
 const api = Router();
 
-api.get('/', checkAuth, getCharacters);
+api.get('/', UserModel.checkAuth, getCharacters);
 
-api.post('/', checkAuth, createCharacter);
+api.post('/', UserModel.checkAuth, createCharacter);
 
-api.patch('/:id', checkAuth, updateCharacter);
+api.patch('/:id', UserModel.checkAuth, updateCharacter);
 
-api.delete('/:id', checkAuth, deleteCharacter);
+api.delete('/:id', UserModel.checkAuth, deleteCharacter);
 
 export default api;

@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/User';
+
+import { UserModel } from '../models/user.model';
 
 const accessTokenSecret = `${process.env.JWT_KEY}`;
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({
-      email,
-    });
+    const user = await UserModel.findOneByEmail(email);
 
     if (!user) {
       return res.status(404).json({
@@ -51,9 +50,9 @@ export const login = async (req: Request, res: Response) => {
 export const register = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    const isUserExist = await User.findOne({ email });
+    const foundedUser = await UserModel.findOneByEmail(email);
 
-    if (isUserExist) {
+    if (foundedUser) {
       return res.status(401).json({
         message: 'User exist!',
         response: 'failed',
@@ -61,14 +60,11 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const hash = await bcrypt.hash(password, 10);
+    const user = await UserModel.createUser(email, hash);
 
-    const user = new User({
-      email,
-      password: hash,
-      dateCreated: Date.now(),
-    });
-
-    await user.save();
+    if (!user) {
+      throw new Error('Something wrong');
+    }
 
     return res.status(201).json({
       message: 'User successfully created!',

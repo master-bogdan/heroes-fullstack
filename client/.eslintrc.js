@@ -4,12 +4,6 @@ module.exports = {
     es2020: true,
     node: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-    'airbnb',
-  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -18,9 +12,25 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module',
   },
+  extends: [
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:testing-library/react',
+    'plugin:@typescript-eslint/recommended',
+    'airbnb',
+  ],
   plugins: [
     'react',
     '@typescript-eslint',
+    'testing-library',
+  ],
+  overrides: [
+    {
+      files: [
+        '**/*.spec.ts',
+        '**/*.spec.tsx',
+      ],
+    },
   ],
   settings: {
     react: {

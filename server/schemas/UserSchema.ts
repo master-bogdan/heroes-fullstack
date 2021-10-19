@@ -12,7 +12,7 @@ export interface IUser extends Document {
   token: string;
 }
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -32,4 +32,4 @@ const UserSchema = new Schema({
   token: String,
 });
 
-export const User = model<IUser>('User', UserSchema);
+export const UserSchema = model<IUser>('User', userSchema);
