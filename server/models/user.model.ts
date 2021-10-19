@@ -2,6 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { IUser, UserSchema } from '../schemas/UserSchema';
+import { verifyToken } from '../utils/verifyToken';
+
+const accessTokenSecret = `${process.env.JWT_KEY}`;
 
 export class UserModel {
   static async createUser(email: string, password: string): Promise<IUser | null> {
@@ -24,8 +27,7 @@ export class UserModel {
     }
 
     try {
-      const decoded = jwt.decode(token, { complete: true });
-      const user = await UserModel.findOneByEmail(decoded?.payload.email);
+      const user = await UserSchema.findOne({ token });
 
       if (user) {
         return user;
@@ -45,15 +47,15 @@ export class UserModel {
   ): Promise<void | Response<any, Record<string, any>>> {
     const token = req.headers.authorization;
 
-    if (!token) {
+    if (!verifyToken(token) || !token) {
       throw new Error('Token not valid!');
     }
 
     try {
       const decoded = jwt.decode(token, { complete: true });
-      const user = await UserModel.findOneByEmail(decoded?.payload.email);
+      const user = await UserSchema.findOne({ email: decoded?.payload.email });
 
-      if (user?.token === token) {
+      if (user && user.token === token) {
         return next();
       }
 
