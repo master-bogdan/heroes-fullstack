@@ -10,8 +10,8 @@ interface IUsersService {
 }
 
 export const UsersService: IUsersService = ({
-  create: async (user: IUser) => (UsersRepository.create(user)),
-  findOne: async (email: string) => (UsersRepository.findOne(email)),
-  update: async (user: Partial<IUser>) => (UsersRepository.update(user)),
-  delete: async (email: string) => (UsersRepository.delete(email)),
+  create: async (user) => (UsersRepository.create(user)),
+  findOne: async (email) => (UsersRepository.findOne(email)),
+  update: async (user) => (UsersRepository.update(user)),
+  delete: async (email) => (UsersRepository.delete(email)),
 });
