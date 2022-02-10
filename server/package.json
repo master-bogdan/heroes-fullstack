@@ -20,20 +20,7 @@
     "build": "tsc --skipLibCheck",
     "server": "nodemon build/index.js",
     "tsc": "tsc -w",
-    "postinstall": "tsc --skipLibCheck",
     "dev": "concurrently -n 'tsc,server,client' -c 'red,yellow,blue' \"npm run tsc\" \"npm run server\" \"cd ../ && npm run start --prefix client\""
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -42,12 +29,14 @@
     "@types/jsonwebtoken": "^8.5.1",
     "@types/mongoose": "^5.10.3",
     "@types/node": "^14.14.28",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "concurrently": "^5.3.0",
-    "eslint": "^7.20.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "dotenv": "^10.0.0",
     "nodemon": "^2.0.4"
   }
 }

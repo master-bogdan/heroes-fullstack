@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-export const errorController = (
+export const globalExceptionFilter = (
   err: Error,
   req: Request,
   res: Response,

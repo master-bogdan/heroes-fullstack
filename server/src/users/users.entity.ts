@@ -3,33 +3,37 @@ import {
   Schema,
   model,
 } from 'mongoose';
+import { ICharacter } from '../characters/characters.entity';
 
 export interface IUser extends Document {
+  nickName: string;
   email: string;
   password: string;
-  characters: string[];
-  dateCreated: Date;
-  token: string;
+  characters: ICharacter[];
 }
 
-const userSchema = new Schema({
+const schema = new Schema<IUser>({
+  nickName: {
+    type: String,
+    required: true,
+    unique: true,
+    min: 1,
+    max: 50,
+  },
   email: {
     type: String,
     required: true,
+    unique: true,
     min: 6,
-    max: 255,
+    max: 40,
   },
   password: {
     type: String,
     required: true,
     min: 6,
-    max: 1024,
+    max: 80,
   },
   characters: [{ type: Schema.Types.ObjectId, ref: 'Characters' }],
-  dateCreated: {
-    type: Date,
-  },
-  token: String,
 });
 
-export const UserSchema = model<IUser>('User', userSchema);
+export const UsersEntity = model<IUser>('Users', schema);

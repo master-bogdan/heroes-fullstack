@@ -13,7 +13,7 @@ export interface ICharacter extends Document {
 const characterSchema = new Schema({
   title: String,
   description: String,
-  image: String,
+  imageUrl: String,
 });
 
 export const CharacterSchema = model<ICharacter>('Character', characterSchema);

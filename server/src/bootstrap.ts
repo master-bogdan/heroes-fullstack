@@ -1,31 +1,10 @@
-import express from 'express';
-import cors from 'cors';
+import { Express } from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-import api from './routes/api';
-import auth from './routes/auth';
-import { errorController } from './controllers/error.controller';
-
-dotenv.config();
-const app = express();
 
 // Basic Configuration
 const PORT = process.env.PORT || 3001;
 
-// Middlewares
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cors());
-
-// Auth
-app.use(auth);
-// API
-app.use('/api', api);
-// Error handling
-app.use(errorController);
-
-const start = async () => {
+export const bootstrap = async (app: Express) => {
   try {
     await mongoose.connection.on('connected', () => {
       console.log('mongoose connected');
@@ -43,5 +22,3 @@ const start = async () => {
     console.log(error);
   }
 };
-
-start();
