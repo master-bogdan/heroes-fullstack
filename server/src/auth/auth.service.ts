@@ -7,26 +7,21 @@ export const AuthService = ({
   login: async (dto: any) => {
     const { email, password } = dto;
 
-    try {
-      const user = await UsersService.findOne(email);
+    const user = await UsersService.findOne(email);
 
-      if (!user) {
-        throw new Error('User not exist!');
-      }
-
-      const isValidPassword = await bcrypt.compare(password, user.password);
-
-      if (!isValidPassword) {
-        throw new Error('Wrong password');
-      }
-
-      const accessToken = JwtService.generateAccessToken(user.email);
-
-      return accessToken;
-    } catch (error) {
-      console.log(error);
-      throw new Error('Database server error');
+    if (!user) {
+      throw new Error('User not exist!');
     }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+
+    if (!isValidPassword) {
+      throw new Error('Wrong password');
+    }
+
+    const accessToken = JwtService.generateAccessToken(user.email);
+
+    return accessToken;
   },
   register: async (dto: any) => {
     const { nickName, email, password } = dto;

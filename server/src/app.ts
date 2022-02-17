@@ -1,12 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import * as express from 'express';
+import * as cors from 'cors';
+import * as dotenv from 'dotenv';
 
-import { globalExceptionFilter } from './common/exceptions/exception.filter';
-import api from './routes/api';
-import auth from './routes/auth';
 import { bootstrap } from './bootstrap';
+import { errorMiddleware } from './common/middlewares/error.middleware';
 import { loggerMiddleware } from './common/middlewares/logger.middleware';
+import auth from './auth/auth.router';
 
 dotenv.config();
 const app = express();
@@ -20,8 +19,8 @@ app.use(cors());
 
 // Router
 app.use('/v1/auth', auth);
-app.use('/v1/api', api);
+// app.use('/v1/api', api);
 // Error handling
-app.use(globalExceptionFilter);
+app.use(errorMiddleware);
 
 bootstrap(app);
