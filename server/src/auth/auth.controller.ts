@@ -18,7 +18,6 @@ export const AuthController = ({
 
       return res.status(201).json({ token: accessToken });
     } catch (error) {
-      console.log(error);
       return next(error);
     }
   },

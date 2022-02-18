@@ -1,10 +1,10 @@
 import { Express } from 'express';
 import * as mongoose from 'mongoose';
-
-// Basic Configuration
-const PORT = process.env.PORT || 3001;
+import { consoleMessage } from './utils/console-message';
 
 export const bootstrap = async (app: Express) => {
+  const PORT = process.env.PORT || 3001;
+
   try {
     await mongoose.connect(`${process.env.MONGO_URI}`, {
       useNewUrlParser: true,
@@ -13,9 +13,9 @@ export const bootstrap = async (app: Express) => {
     });
 
     app.listen(PORT, () => {
-      console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+      consoleMessage.system(`⚡️[server]: Server is running at https://localhost:${PORT}`);
     });
   } catch (error) {
-    console.log(error);
+    consoleMessage.error(error);
   }
 };

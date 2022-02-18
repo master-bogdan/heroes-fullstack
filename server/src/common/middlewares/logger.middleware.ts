@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { loggerDate } from '../../utils/dates';
+import { consoleMessage } from '../../utils/console-message';
 
-export const loggerMiddleware = (request: Request, response: Response, next: NextFunction) => {
-  console.log(`[${loggerDate}] - ${request.method} ${request.path}`);
+export const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  consoleMessage.logger(`${req.method} ${req.path}`);
   next();
 };
