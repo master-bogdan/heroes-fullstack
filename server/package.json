@@ -17,8 +17,8 @@
   },
   "scripts": {
     "start": "node build/app.js",
+    "start:dev": "rm -r ./build && concurrently -c 'red,yellow' \"tsc -w\" \"nodemon build/app.js\"",
     "build": "tsc --skipLibCheck",
-    "start:dev": "concurrently -c 'red,yellow' \"tsc -w\" \"nodemon build/app.js\"",
     "tsc": "tsc -w",
     "dev": "concurrently -n 'tsc,server,client' -c 'red,yellow,blue' \"npm run tsc\" \"npm run server\" \"cd ../ && npm run start --prefix client\""
   },

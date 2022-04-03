@@ -1,0 +1,12 @@
+import { model, Document } from 'mongoose';
+import { IHero } from './heroes.model';
+import { UsersSchema } from '../schemas/users.schema';
+
+export interface IUser {
+  nickname: string;
+  email: string;
+  password: string;
+  heroes?: IHero[];
+}
+
+export const UsersModel = model<IUser & Document>('Users', UsersSchema);
