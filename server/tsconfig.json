@@ -1,17 +1,24 @@
 {
   "compilerOptions": {
+    "lib": ["es2021"],
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "outDir": "./build",
     "module": "commonjs",
+    "target": "es2021",
+    "strict": true,
+    "esModuleInterop": true,
     "declaration": true,
     "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es6",
     "sourceMap": true,
-    "outDir": "./build",
-    "baseUrl": "./src"
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src"
+  ],
+  "exclude":[
+    "./node_modules"
   ]
 }

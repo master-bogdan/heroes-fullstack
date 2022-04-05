@@ -7,7 +7,12 @@ import { ILoginDTO } from '../../dto/auth/login.dto';
 export class AuthController {
   private readonly authService = new AuthService();
 
-  login = async (req: Request<unknown, unknown, ILoginDTO>, res: Response, next: NextFunction) => {
+  login = async (
+    req: Request<Record<string, any>,
+    Record<string, any>, ILoginDTO>,
+    res: Response,
+    next: NextFunction,
+  ) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {

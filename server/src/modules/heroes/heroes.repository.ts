@@ -16,8 +16,8 @@ export class HeroesRepository implements IHeroesRepository {
     return this.heroesModel.find();
   }
 
-  async findOne(heroId: string): Promise<IHero> {
-    return this.heroesModel.findOne();
+  async findOne(heroId: string): Promise<IHero | null> {
+    return this.heroesModel.findOne({ _id: heroId });
   }
 
   async create(hero: IHero): Promise<IHero> {
