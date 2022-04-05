@@ -10,14 +10,10 @@ export const SessionsSchema: Schema<ISession> = new Schema({
     type: String,
     required: true,
     unique: true,
-    min: 6,
-    max: 40,
   },
   refreshToken: {
     type: String,
     required: true,
-    min: 6,
-    max: 80,
   },
 }, {
   timestamps: true,

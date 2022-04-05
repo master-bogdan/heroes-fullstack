@@ -1,5 +1,5 @@
 export interface ILoginDTO {
-  email: string;
+  email?: string;
   password: string;
   nickname: string;
 }

@@ -32,5 +32,6 @@ module.exports = {
     'import/no-relative-packages': 'off',
     'class-methods-use-this': 'off',
     'arrow-body-style': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

@@ -20,7 +20,9 @@
   "scripts": {
     "start": "node build/app.js",
     "start:dev": "nodemon src/app.ts",
-    "build": "rm -r ./build && tsc --skipLibCheck"
+    "build": "rm -rf ./build && npm run build:server && npm run build:client",
+    "build:server": "tsc --skipLibCheck",
+    "build:client": "cd ../client && npm run build"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

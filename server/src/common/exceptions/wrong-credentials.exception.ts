@@ -2,13 +2,20 @@ import { HttpException } from './http-exception';
 
 class WrongCredentialsException extends HttpException {
   statusCode = 401;
+  message = 'Wrong credentials provided';
 
-  constructor() {
+  constructor(message?: string) {
     super('Wrong credentials provided');
+
+    if (message) {
+      this.message = message;
+    }
+
+    Object.setPrototypeOf(this, WrongCredentialsException.prototype);
   }
 
   serializeErrors() {
-    return [{ message: 'Wrong credentials provided' }];
+    return [{ message: this.message }];
   }
 }
 

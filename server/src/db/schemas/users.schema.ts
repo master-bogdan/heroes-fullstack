@@ -6,7 +6,7 @@ export const UsersSchema: Schema<IUser> = new Schema({
     type: String,
     required: true,
     unique: true,
-    min: 1,
+    min: 2,
     max: 20,
   },
   email: {

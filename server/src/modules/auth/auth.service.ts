@@ -1,46 +1,50 @@
-import * as bcrypt from 'bcryptjs';
-import { UsersService } from '../users/users.service';
-import { ILoginDTO } from '../../dto/auth/login.dto';
-import { JwtService } from './jwt/jwt.service';
+import bcrypt from 'bcryptjs';
+// Exceptions
+import CustomException from '../../common/exceptions/custom.exception';
+import { NotFoundException } from '../../common/exceptions/not-found-exception';
 import WrongCredentialsException from '../../common/exceptions/wrong-credentials.exception';
+// Types
+import { IUser } from '../../db/models/users.model';
+import { ILoginDTO } from '../../dto/auth/login.dto';
+// Services
+import { UsersService } from '../users/users.service';
+import { JwtService } from './services/jwt.service';
 
 interface IAuthService {
   login(dto: ILoginDTO): any;
-  register(dto: any): any;
+  register(dto: Required<ILoginDTO>): any;
 }
 
 export class AuthService implements IAuthService {
   private readonly usersService = new UsersService();
 
-  async login(dto: ILoginDTO) {
-    const { email, password } = dto;
+  login = async (dto: ILoginDTO) => {
+    const { nickname, password } = dto;
 
-    const user = await this.usersService.findOneUser(email);
+    const user = await this.usersService.findOneUser({ nickname });
 
     if (!user) {
-      throw new Error('User not exist!');
+      throw new NotFoundException();
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
-      throw new WrongCredentialsException();
+      throw new WrongCredentialsException('Wrong password');
     }
 
-    const accessToken = JwtService.generateAccessToken(user.email);
+    const { accessToken } = JwtService.generateTokens(user._id);
 
     return accessToken;
-  }
+  };
 
   register = async (dto: ILoginDTO) => {
     const { nickname, email, password } = dto;
 
-    console.log(dto);
-
-    const foundedUser = await this.usersService.findOneUser(email);
+    const foundedUser = await this.usersService.findOneUser({ email, nickname });
 
     if (foundedUser) {
-      throw new Error('User exist!');
+      throw new CustomException(403, 'User with this email or nickname exist!');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -49,7 +53,7 @@ export class AuthService implements IAuthService {
       email,
       password: hashedPassword,
       nickname,
-    });
+    } as IUser);
 
     return user;
   };

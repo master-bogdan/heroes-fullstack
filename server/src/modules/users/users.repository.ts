@@ -1,8 +1,8 @@
-import { UpdateWriteOpResult } from 'mongoose';
+import { FilterQuery, UpdateWriteOpResult, Document } from 'mongoose';
 import { IUser, UsersModel } from '../../db/models/users.model';
 
 interface IUsersRepository {
-  findOne: (email: string) => Promise<IUser | null>;
+  findOne: (filter?: FilterQuery<IUser & Document<any, any, any>>) => Promise<IUser | null>;
   create: (user: IUser) => Promise<IUser | null>;
   update: (user: Partial<IUser>) => Promise<UpdateWriteOpResult>;
   delete: (email: string) => Promise<unknown>;
@@ -11,8 +11,8 @@ interface IUsersRepository {
 export class UsersRepository implements IUsersRepository {
   private readonly userModel = UsersModel;
 
-  async findOne(email: string) {
-    return this.userModel.findOne({ email });
+  async findOne(filter?: FilterQuery<IUser & Document<any, any, any>>) {
+    return this.userModel.findOne(filter);
   }
 
   async create(user: IUser) {
