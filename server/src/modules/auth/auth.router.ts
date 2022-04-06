@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { validateMiddleware } from '../../middlewares/validate.middleware';
+import { authGuard } from '../../common/guards/auth.guard';
 import { AuthController } from './auth.controller';
 import { LoginValidationRules } from './validations/login.validation';
 import { RegisterValidationRules } from './validations/register.validation';
@@ -10,7 +11,7 @@ const authController = new AuthController();
 router
   .post('/login', LoginValidationRules, validateMiddleware, authController.login)
   .post('/register', RegisterValidationRules, validateMiddleware, authController.register)
-  .post('/password/recovery', RegisterValidationRules, authController.refreshToken)
-  .get('/token', RegisterValidationRules, authController.refreshToken);
+  .post('/password/recovery', RegisterValidationRules, authController.passwordRecovery)
+  .get('/token', authGuard, authController.refresh);
 
 export { router as AuthRouter };

@@ -14,6 +14,7 @@ export const SessionsSchema: Schema<ISession> = new Schema({
   refreshToken: {
     type: String,
     required: true,
+    unique: true,
   },
 }, {
   timestamps: true,

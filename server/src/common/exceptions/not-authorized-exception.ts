@@ -1,17 +1,17 @@
 import { HttpException } from './http-exception';
 
-export class NotFoundException extends HttpException {
-  statusCode = 404;
-  message = 'Not found';
+export class NotAuthroizedException extends HttpException {
+  statusCode = 401;
+  message = 'User not authorized';
 
   constructor(message?: string) {
-    super('Not found');
+    super('User not authorized');
 
     if (message) {
       this.message = message;
     }
 
-    Object.setPrototypeOf(this, NotFoundException.prototype);
+    Object.setPrototypeOf(this, NotAuthroizedException.prototype);
   }
 
   serializeErrors() {

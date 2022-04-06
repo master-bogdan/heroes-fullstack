@@ -1,12 +1,13 @@
 import { Express } from 'express';
 import { connectDB } from './db/connect';
 import { consoleMessage } from './common/utils/console-message';
+import { config } from './config/config';
 
 export const bootstrap = async (app: Express) => {
-  const PORT = process.env.PORT || 3001;
+  const { PORT, MONGO_URI } = config();
 
   try {
-    await connectDB(process.env.MONGO_URI as string);
+    await connectDB(MONGO_URI);
 
     app.listen(PORT, () => {
       consoleMessage.system('⚡️[db]: Database connected');

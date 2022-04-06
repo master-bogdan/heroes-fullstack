@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import helmet from 'helmet';
 
 import { bootstrap } from './bootstrap';
@@ -10,7 +9,6 @@ import { AuthRouter } from './modules/auth/auth.router';
 import { UsersRouter } from './modules/users/users.router';
 import { HeroesRouter } from './modules/heroes/heroes.router';
 
-dotenv.config();
 const app = express();
 // Logger
 app.use(loggerMiddleware);

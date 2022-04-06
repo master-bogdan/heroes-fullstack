@@ -8,14 +8,18 @@ export class AuthController {
   private readonly authService = new AuthService();
 
   login = async (
-    req: Request<Record<string, any>,
-    Record<string, any>, ILoginDTO>,
+    req: Request<Record<string, any>, Record<string, any>, ILoginDTO>,
     res: Response,
     next: NextFunction,
   ) => {
     try {
-      const accessToken = await this.authService.login(req.body);
+      const { accessToken, refreshToken } = await this.authService.login(req.body);
 
+      res.cookie(
+        'refreshToken',
+        refreshToken,
+        { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true },
+      );
       return res.status(200).json({ accessToken });
     } catch (error) {
       return next(error);
@@ -38,17 +42,20 @@ export class AuthController {
     }
   };
 
-  refreshToken = async (req: Request, res: Response, next: NextFunction) => {
+  logout = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const errors = validationResult(req);
+      res.clearCookie('refreshToken');
+      return res.status(200).json({ logout: true });
+    } catch (e) {
+      return next(e);
+    }
+  };
 
-      if (!errors.isEmpty()) {
-        throw new RequestValidationException(errors.array());
-      }
+  refresh = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(req.params);
 
-      const user = await this.authService.register(req.body);
-
-      return res.status(201).json({ user });
+      return res.status(201).json({ req: req.params });
     } catch (error) {
       return next(error);
     }

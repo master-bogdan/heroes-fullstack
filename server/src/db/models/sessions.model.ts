@@ -1,5 +1,5 @@
 import { model, Document } from 'mongoose';
-import { SessionsSchema } from 'db/schemas/sessions.schema';
+import { SessionsSchema } from '../schemas/sessions.schema';
 
 export interface ISession {
   userId: string
@@ -7,4 +7,6 @@ export interface ISession {
   refreshToken: string
 }
 
-export const SessionsModel = model<ISession & Document>('Sessions', SessionsSchema);
+export type SessionsType = ISession & Document;
+
+export const SessionsModel = model<SessionsType>('Sessions', SessionsSchema);

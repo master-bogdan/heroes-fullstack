@@ -1,33 +1,50 @@
 import jwt from 'jsonwebtoken';
+import { config } from '../../../config/config';
 
-const accessTokenSecret = `${process.env.JWT_ACCESS_SECRET}`;
+interface IJwtService {
+  readonly accessTokenSecret: string;
+  readonly refreshTokenSecret: string;
+  generateTokens(userId: string): { accessToken: string; refreshToken: string };
+  validateAccessToken(token: string): any;
+  validateRefreshToken(token: string): any;
+}
 
-export class JwtService {
-  static generateTokens(userId: string) {
+export class JwtService implements IJwtService {
+  readonly accessTokenSecret: string;
+  readonly refreshTokenSecret: string;
+
+  constructor() {
+    const { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } = config();
+
+    this.accessTokenSecret = JWT_ACCESS_SECRET;
+    this.refreshTokenSecret = JWT_REFRESH_SECRET;
+  }
+
+  generateTokens(userId: string) {
     const accessToken = jwt.sign(
       { userId },
-      accessTokenSecret,
+      this.accessTokenSecret,
       { expiresIn: '30m' },
     );
 
     const refreshToken = jwt.sign(
       { userId },
-      accessTokenSecret,
+      this.accessTokenSecret,
       { expiresIn: '30d' },
     );
 
     return { accessToken, refreshToken };
   }
 
-  static validateAccessToken(token: string) {
-    const accessToken = jwt.verify(token, accessTokenSecret);
+  validateAccessToken(token: string) {
+    const payload = jwt.verify(token, this.accessTokenSecret);
 
-    return accessToken;
+    return payload;
   }
 
-  static validateRefreshToken(token: string) {
-    const accessToken = jwt.verify(token, accessTokenSecret);
+  validateRefreshToken(token: string) {
+    const payload = jwt.verify(token, this.refreshTokenSecret);
 
-    return accessToken;
+    return payload;
   }
 }
