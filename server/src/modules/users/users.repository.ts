@@ -12,7 +12,9 @@ export class UsersRepository implements IUsersRepository {
   private readonly userModel = UsersModel;
 
   async findOne(filter?: FilterQuery<IUser & Document<any, any, any>>) {
-    return this.userModel.findOne(filter);
+    return this.userModel.findOne(filter, {
+      password: 0,
+    });
   }
 
   async create(user: IUser) {

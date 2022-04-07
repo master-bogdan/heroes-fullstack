@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 // Exceptions
-import { NotAuthroizedException } from '../../common/exceptions/not-authorized-exception';
-import { RequestValidationException } from '../../common/exceptions/request-validation-exception';
+import { HttpException } from '../../common/exceptions/http-exception';
 // Services
 import { AuthService } from './auth.service';
 // DTO
@@ -29,12 +28,6 @@ export class AuthController {
 
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        throw new RequestValidationException(errors.array());
-      }
-
       const user = await this.authService.register(req.body);
 
       return res.status(201).json(user);
@@ -56,12 +49,12 @@ export class AuthController {
     try {
       const authorizationHeader = req.headers.authorization;
       if (!authorizationHeader) {
-        throw new NotAuthroizedException();
+        throw HttpException.UnauthorizedError();
       }
 
       const accessToken = authorizationHeader.split(' ')[1];
       if (!accessToken) {
-        throw new NotAuthroizedException();
+        throw HttpException.UnauthorizedError();
       }
 
       const newAccessToken = await this.authService.refresh(accessToken);

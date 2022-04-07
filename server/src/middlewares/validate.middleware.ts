@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { RequestValidationException } from '../common/exceptions/request-validation-exception';
+import { HttpException } from '../common/exceptions/http-exception';
 
 export const validateMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -10,7 +10,7 @@ export const validateMiddleware = async (req: Request, res: Response, next: Next
       return next();
     }
 
-    throw new RequestValidationException(errors.array());
+    throw HttpException.RequestValidationError({ errors: errors.array() });
   } catch (error) {
     return next(error);
   }

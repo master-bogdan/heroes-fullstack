@@ -8,11 +8,20 @@ export const errorMiddleware: ErrorRequestHandler = (
   res,
   next,
 ) => {
-  consoleMessage.error(err);
-
   if (err instanceof HttpException) {
-    res.status(err.statusCode).json({ errors: err.serializeErrors() });
+    consoleMessage.error(`[error] - ${err.message} ${err.statusCode}`);
+
+    res.status(err.statusCode).json({
+      errors: err.errors.length === 0 ? undefined : err.errors,
+      message: err.message,
+      statusCode: err.statusCode,
+    });
   }
 
-  res.status(500).json({ errors: [{ message: err.message }] });
+  consoleMessage.error(`[error] - ${err}`);
+
+  res.status(500).json({
+    message: 'Internal Server Error',
+    statusCode: 500,
+  });
 };

@@ -1,9 +1,6 @@
 import bcrypt from 'bcryptjs';
 // Exceptions
-import CustomException from '../../common/exceptions/custom.exception';
-import { NotFoundException } from '../../common/exceptions/not-found-exception';
-import WrongCredentialsException from '../../common/exceptions/wrong-credentials.exception';
-import { DatabaseConnectionException } from '../../common/exceptions/database-connection-exception';
+import { HttpException } from '../../common/exceptions/http-exception';
 // Types
 import { IUser } from '../../db/models/users.model';
 import { ILoginDTO } from '../../dto/auth/login.dto';
@@ -36,13 +33,13 @@ export class AuthService implements IAuthService {
     const user = await this.usersService.findOneUser({ nickname });
 
     if (!user) {
-      throw new NotFoundException();
+      throw HttpException.NotFound('User not found');
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
-      throw new WrongCredentialsException('Wrong password');
+      throw HttpException.Forbidden('Wrong password');
     }
 
     const tokens = this.jwtService.generateTokens(user._id);
@@ -60,7 +57,7 @@ export class AuthService implements IAuthService {
     const foundedUser = await this.usersService.findOneUser({ email, nickname });
 
     if (foundedUser) {
-      throw new CustomException(403, 'User with this email or nickname exist!');
+      throw HttpException.Forbidden('User with this email or nickname exist!');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -78,7 +75,7 @@ export class AuthService implements IAuthService {
     const session = await this.sessionsService.deleteSession(userId);
 
     if (!session) {
-      throw new CustomException(400, 'Please try again later');
+      throw HttpException.DatabaseConnectionError();
     }
 
     return { logout: true };
@@ -90,13 +87,13 @@ export class AuthService implements IAuthService {
     const sessionExist = await this.sessionsService.findSession(userPayload!.userId);
 
     if (!sessionExist) {
-      throw new NotFoundException('Session not exist, please login again');
+      throw HttpException.NotFound('Session not exist, please login again');
     }
 
     const payload = this.jwtService.validateRefreshToken(sessionExist.refreshToken);
 
     if (!payload) {
-      throw new CustomException(403, 'Refresh token invalid');
+      throw HttpException.Forbidden('Refresh token invalid');
     }
 
     const tokens = this.jwtService.generateTokens(payload.userId);
@@ -106,7 +103,7 @@ export class AuthService implements IAuthService {
     });
 
     if (!session) {
-      throw new DatabaseConnectionException();
+      throw HttpException.DatabaseConnectionError();
     }
 
     return { accessToken: tokens.accessToken };

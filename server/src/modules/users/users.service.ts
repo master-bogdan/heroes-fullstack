@@ -4,8 +4,8 @@ import { IUser } from '../../db/models/users.model';
 
 interface IUsersService {
   findOneUser: ({
-    email, nickname,
-  }: { email?: string; nickname?: string }) => Promise<IUser | null>;
+    email, nickname, userId,
+  }: { email?: string; nickname?: string, userId?: string }) => Promise<IUser | null>;
   createUser: (user: IUser) => Promise<IUser | null>;
   updateUser: (user: Partial<IUser>) => Promise<UpdateWriteOpResult>;
   deleteUser: (email: string) => Promise<unknown>;
@@ -18,9 +18,13 @@ export class UsersService implements IUsersService {
     return this.usersRepository.create(user);
   }
 
-  async findOneUser({ email, nickname }: { email?: string; nickname?: string }) {
+  async findOneUser({
+    email,
+    nickname,
+    userId,
+  }: { email?: string; nickname?: string, userId?: string }) {
     return this.usersRepository.findOne({
-      $or: [{ email }, { nickname }],
+      $or: [{ email }, { nickname }, { _id: userId }],
     });
   }
 
