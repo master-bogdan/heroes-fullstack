@@ -1,9 +1,9 @@
-import { Express } from 'express';
+import { Application } from 'express';
 import { connectDB } from './db/connect';
 import { consoleMessage } from './common/utils/console-message';
 import { config } from './config/config';
 
-export const bootstrap = async (app: Express) => {
+export const bootstrap = async (app: Application) => {
   const { PORT, MONGO_URI } = config();
 
   try {

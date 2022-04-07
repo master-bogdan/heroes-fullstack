@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
-import { UserRequest } from '../../interfaces/user-request.interface';
-import { JwtService } from '../../modules/auth/services/jwt.service';
-import { NotAuthroizedException } from '../exceptions/not-authorized-exception';
+import { UserRequest } from '../interfaces/user-request.interface';
+import { JwtService } from '../modules/auth/services/jwt.service';
+import { NotAuthroizedException } from '../common/exceptions/not-authorized-exception';
 
 export const authGuard = async (req: UserRequest, res: Response, next: NextFunction) => {
   const jwtService = new JwtService();
@@ -18,11 +18,12 @@ export const authGuard = async (req: UserRequest, res: Response, next: NextFunct
     }
 
     const userData = jwtService.validateAccessToken(accessToken);
+
     if (!userData) {
       throw new NotAuthroizedException('Token is not valid');
     }
 
-    req.user = userData as string[];
+    req.user = userData;
     return next();
   } catch (e) {
     console.log(e);

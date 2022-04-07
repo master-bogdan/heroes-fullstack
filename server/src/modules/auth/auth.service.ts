@@ -18,6 +18,11 @@ interface IAuthService {
   readonly sessionsService: SessionsService;
   login(dto: ILoginDTO): Promise<{ accessToken: string, refreshToken: string }>;
   register(dto: Required<ILoginDTO>): Promise<IUser>;
+  refresh(accessToken: string): Promise<{ accessToken: string }>;
+  /**
+   * @todo
+   */
+  passwordRecovery(): any
 }
 
 export class AuthService implements IAuthService {
@@ -69,12 +74,20 @@ export class AuthService implements IAuthService {
     return user;
   }
 
-  async logout(refreshToken: string) {
-    return this.sessionsService.deleteSession(refreshToken);
+  async logout(userId: string) {
+    const session = await this.sessionsService.deleteSession(userId);
+
+    if (!session) {
+      throw new CustomException(400, 'Please try again later');
+    }
+
+    return { logout: true };
   }
 
-  async refresh(userId: string) {
-    const sessionExist = await this.sessionsService.findSession(userId);
+  async refresh(accessToken: string) {
+    const userPayload = this.jwtService.validateAccessToken(accessToken, true);
+
+    const sessionExist = await this.sessionsService.findSession(userPayload!.userId);
 
     if (!sessionExist) {
       throw new NotFoundException('Session not exist, please login again');
@@ -86,18 +99,20 @@ export class AuthService implements IAuthService {
       throw new CustomException(403, 'Refresh token invalid');
     }
 
-    const tokens = this.jwtService.generateTokens(userId);
+    const tokens = this.jwtService.generateTokens(payload.userId);
     const session = await this.sessionsService.updateSession({
       ...tokens,
-      userId,
+      userId: payload.userId,
     });
 
     if (!session) {
       throw new DatabaseConnectionException();
     }
 
-    console.log(session);
+    return { accessToken: tokens.accessToken };
+  }
 
-    return session;
+  async passwordRecovery() {
+    return true;
   }
 }

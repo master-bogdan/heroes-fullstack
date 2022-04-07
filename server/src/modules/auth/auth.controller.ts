@@ -1,8 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+// Exceptions
+import { NotAuthroizedException } from '../../common/exceptions/not-authorized-exception';
 import { RequestValidationException } from '../../common/exceptions/request-validation-exception';
+// Services
 import { AuthService } from './auth.service';
+// DTO
 import { ILoginDTO } from '../../dto/auth/login.dto';
+// Interfaces
+import { UserRequest } from '../../interfaces/user-request.interface';
 
 export class AuthController {
   private readonly authService = new AuthService();
@@ -13,13 +19,8 @@ export class AuthController {
     next: NextFunction,
   ) => {
     try {
-      const { accessToken, refreshToken } = await this.authService.login(req.body);
+      const { accessToken } = await this.authService.login(req.body);
 
-      res.cookie(
-        'refreshToken',
-        refreshToken,
-        { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true },
-      );
       return res.status(200).json({ accessToken });
     } catch (error) {
       return next(error);
@@ -42,10 +43,10 @@ export class AuthController {
     }
   };
 
-  logout = async (req: Request, res: Response, next: NextFunction) => {
+  logout = async (req: UserRequest, res: Response, next: NextFunction) => {
     try {
-      res.clearCookie('refreshToken');
-      return res.status(200).json({ logout: true });
+      const logout = await this.authService.logout(req.user!.userId);
+      return res.status(200).json(logout);
     } catch (e) {
       return next(e);
     }
@@ -53,9 +54,19 @@ export class AuthController {
 
   refresh = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.params);
+      const authorizationHeader = req.headers.authorization;
+      if (!authorizationHeader) {
+        throw new NotAuthroizedException();
+      }
 
-      return res.status(201).json({ req: req.params });
+      const accessToken = authorizationHeader.split(' ')[1];
+      if (!accessToken) {
+        throw new NotAuthroizedException();
+      }
+
+      const newAccessToken = await this.authService.refresh(accessToken);
+
+      return res.status(200).json(newAccessToken);
     } catch (error) {
       return next(error);
     }
@@ -63,7 +74,9 @@ export class AuthController {
 
   passwordRecovery = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      return res.status(201).json();
+      const test = await this.authService.passwordRecovery();
+
+      return res.status(200).json(test);
     } catch (error) {
       return next(error);
     }

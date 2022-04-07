@@ -34,7 +34,7 @@ export class SessionsService implements ISessionService {
     });
   }
 
-  async deleteSession(refreshToken: string) {
-    return SessionsModel.findOneAndDelete({ refreshToken });
+  async deleteSession(userId: string) {
+    return SessionsModel.findOneAndDelete({ userId });
   }
 }

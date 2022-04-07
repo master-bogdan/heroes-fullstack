@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
+import { UserPayload } from '../../../interfaces/payload.interface';
 import { config } from '../../../config/config';
 
 interface IJwtService {
   readonly accessTokenSecret: string;
   readonly refreshTokenSecret: string;
   generateTokens(userId: string): { accessToken: string; refreshToken: string };
-  validateAccessToken(token: string): any;
-  validateRefreshToken(token: string): any;
+  validateAccessToken(token: string): UserPayload | null;
+  validateRefreshToken(token: string): UserPayload | null;
 }
 
 export class JwtService implements IJwtService {
@@ -29,22 +30,36 @@ export class JwtService implements IJwtService {
 
     const refreshToken = jwt.sign(
       { userId },
-      this.accessTokenSecret,
+      this.refreshTokenSecret,
       { expiresIn: '30d' },
     );
 
     return { accessToken, refreshToken };
   }
 
-  validateAccessToken(token: string) {
-    const payload = jwt.verify(token, this.accessTokenSecret);
+  validateAccessToken(token: string, ignoreExpiration?: boolean) {
+    try {
+      const payload = jwt.verify(
+        token,
+        this.accessTokenSecret,
+        {
+          ignoreExpiration,
+        },
+      ) as UserPayload;
 
-    return payload;
+      return payload;
+    } catch (error) {
+      return null;
+    }
   }
 
   validateRefreshToken(token: string) {
-    const payload = jwt.verify(token, this.refreshTokenSecret);
+    try {
+      const payload = jwt.verify(token, this.refreshTokenSecret) as UserPayload;
 
-    return payload;
+      return payload;
+    } catch (error) {
+      return null;
+    }
   }
 }

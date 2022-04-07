@@ -21,8 +21,8 @@ app.use(express.json());
 
 // Router
 app.use('/api/v1/auth', AuthRouter);
-app.use('/api/v1/heroes', HeroesRouter);
 app.use('/api/v1/users', UsersRouter);
+app.use('/api/v1/heroes', HeroesRouter);
 // Error handling
 app.use(errorMiddleware);
 
