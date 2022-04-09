@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-// App start
-import { bootstrap } from './bootstrap';
 // Middlewares
 import { errorMiddleware } from './middlewares/error.middleware';
 import { loggerMiddleware } from './middlewares/logger.middleware';
@@ -30,4 +28,4 @@ app.use('/api/v1/health', HealthRouter);
 // Error handling
 app.use(errorMiddleware);
 
-bootstrap(app);
+export default app;

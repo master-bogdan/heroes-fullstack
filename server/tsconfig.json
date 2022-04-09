@@ -16,7 +16,9 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src"
+    "src",
+    "./.eslintrc.js",
+    "./jest.config.ts"
   ],
   "exclude":[
     "./node_modules"

@@ -1,8 +1,24 @@
 import mongoose from 'mongoose';
+import { consoleMessage } from '../common/utils/console-message';
 
-export const connectDB = (url: string) => mongoose.connect(url, {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-});
+export const connectDB = async (url: string) => {
+  try {
+    const connection = await mongoose.connect(url, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
+
+    consoleMessage.system('⚡️[db]: Database connected');
+
+    return connection;
+  } catch (error) {
+    consoleMessage.error(error as string);
+    return process.exit(0);
+  }
+};
+
+export const closeDB = async () => {
+  await mongoose.disconnect();
+};
