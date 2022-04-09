@@ -1,4 +1,3 @@
-import { UpdateWriteOpResult } from 'mongoose';
 import { UsersRepository } from './users.repository';
 import { IUser } from '../../db/models/users.model';
 
@@ -7,7 +6,7 @@ interface IUsersService {
     email, nickname, userId,
   }: { email?: string; nickname?: string, userId?: string }) => Promise<IUser | null>;
   createUser: (user: IUser) => Promise<IUser | null>;
-  updateUser: (user: Partial<IUser>) => Promise<UpdateWriteOpResult>;
+  updateUser: (user: Partial<IUser>) => Promise<IUser | null>;
   deleteUser: (email: string) => Promise<unknown>;
 }
 

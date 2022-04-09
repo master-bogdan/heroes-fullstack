@@ -18,7 +18,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "node build/app.js",
+    "start": "build:server && node build/app.js",
     "start:dev": "nodemon src/app.ts",
     "build": "rm -rf ./build && npm run build:server && npm run build:client",
     "build:server": "tsc --skipLibCheck",

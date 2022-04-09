@@ -20,7 +20,7 @@ export const authGuard = async (req: UserRequest, res: Response, next: NextFunct
     const userData = jwtService.validateAccessToken(accessToken);
 
     if (!userData) {
-      throw HttpException.UnauthorizedError('Token is not valid');
+      throw HttpException.Forbidden('Token is not valid');
     }
 
     req.user = userData;
