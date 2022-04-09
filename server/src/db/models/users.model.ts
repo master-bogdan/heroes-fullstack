@@ -7,7 +7,7 @@ export interface IUser {
   nickname: string;
   email: string;
   password: string;
-  heroes?: IHero[];
+  heroes?: string[] | IHero[];
 }
 
 export const UsersModel = model<IUser & Document>('Users', UsersSchema);

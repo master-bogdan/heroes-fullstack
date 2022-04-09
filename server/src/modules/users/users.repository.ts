@@ -22,15 +22,20 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async update(user: Partial<IUser>) {
-    return this.userModel.findOneAndUpdate({
-      _id: user._id,
-    }, {
-      ...user,
-    }, {
-      fields: {
-        password: 0,
+    return this.userModel.findOneAndUpdate(
+      {
+        _id: user._id,
       },
-    });
+      {
+        ...user,
+      },
+      {
+        new: true,
+        fields: {
+          password: false,
+        },
+      },
+    );
   }
 
   async delete(email: string) {

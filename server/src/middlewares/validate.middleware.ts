@@ -6,12 +6,12 @@ export const validateMiddleware = async (req: Request, res: Response, next: Next
   try {
     const errors = validationResult(req);
 
-    if (errors.isEmpty()) {
-      return next();
+    if (!errors.isEmpty()) {
+      throw HttpException.RequestValidationError({ errors: errors.array() });
     }
 
-    throw HttpException.RequestValidationError({ errors: errors.array() });
+    next();
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };

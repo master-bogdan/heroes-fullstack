@@ -21,6 +21,7 @@ export const UsersSchema: Schema<IUser> = new Schema({
     required: true,
     min: 6,
     max: 80,
+    select: false,
   },
   heroes: [{ type: Schema.Types.ObjectId, ref: 'Heroes' }],
 }, {

@@ -19,22 +19,22 @@ export class HttpException extends Error {
     return new HttpException(401, message);
   }
 
-  static RequestValidationError({
-    message = 'Invalid request parameters',
-    errors = [],
-  } : { message?: string; errors: ValidationError[] }) {
-    return new HttpException(403, message, errors.map((error) => ({
-      error: error.msg,
-      field: error.param,
-    })));
-  }
-
   static Forbidden(message = 'Forbidden') {
     return new HttpException(403, message);
   }
 
   static NotFound(message = 'Not found') {
     return new HttpException(404, message);
+  }
+
+  static RequestValidationError({
+    message = 'Invalid request parameters',
+    errors = [],
+  } : { message?: string; errors: ValidationError[] }) {
+    return new HttpException(406, message, errors.map((error) => ({
+      error: error.msg,
+      field: error.param,
+    })));
   }
 
   static DatabaseConnectionError(message = 'Error connecting to database') {
