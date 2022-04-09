@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { validationResult } from 'express-validator';
 // Exceptions
 import { HttpException } from '../../common/exceptions/http-exception';
 // Services
@@ -9,8 +8,16 @@ import { ILoginDTO } from '../../dto/auth/login.dto';
 // Interfaces
 import { UserRequest } from '../../interfaces/user-request.interface';
 
-export class AuthController {
-  private readonly authService = new AuthService();
+interface IAuthController {
+  readonly authService: AuthService;
+  login: (req: Request, res: Response, next: NextFunction) => void;
+  register: (req: Request, res: Response, next: NextFunction) => void;
+  logout: (req: UserRequest, res: Response, next: NextFunction) => void;
+  refresh: (req: Request, res: Response, next: NextFunction) => void;
+  passwordRecovery: (req: Request, res: Response, next: NextFunction) => void;
+}
+export class AuthController implements IAuthController {
+  readonly authService = new AuthService();
 
   login = async (
     req: Request<Record<string, any>, Record<string, any>, ILoginDTO>,
@@ -20,9 +27,9 @@ export class AuthController {
     try {
       const { accessToken } = await this.authService.login(req.body);
 
-      return res.status(200).json({ accessToken });
+      res.status(200).json({ accessToken });
     } catch (error) {
-      return next(error);
+      next(error);
     }
   };
 
@@ -30,18 +37,19 @@ export class AuthController {
     try {
       const user = await this.authService.register(req.body);
 
-      return res.status(201).json(user);
+      res.status(201).json(user);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   };
 
   logout = async (req: UserRequest, res: Response, next: NextFunction) => {
     try {
       const logout = await this.authService.logout(req.user!.userId);
-      return res.status(200).json(logout);
+
+      res.status(200).json(logout);
     } catch (e) {
-      return next(e);
+      next(e);
     }
   };
 
@@ -59,9 +67,9 @@ export class AuthController {
 
       const newAccessToken = await this.authService.refresh(accessToken);
 
-      return res.status(200).json(newAccessToken);
+      res.status(200).json(newAccessToken);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   };
 
@@ -69,9 +77,9 @@ export class AuthController {
     try {
       const test = await this.authService.passwordRecovery();
 
-      return res.status(200).json(test);
+      res.status(200).json(test);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   };
 }

@@ -4,17 +4,23 @@ import { IUser } from '../../db/models/users.model';
 import { UserRequest } from '../../interfaces/user-request.interface';
 import { UsersService } from './users.service';
 
-export class UsersController {
-  private usersService = new UsersService();
+interface IUsersController {
+  readonly usersService: UsersService;
+  getUser: (req: UserRequest, res: Response, next: NextFunction) => void;
+  getCurrentUser: (req: UserRequest, res: Response, next: NextFunction) => void;
+  updateCurrentUser: (req: UserRequest, res: Response, next: NextFunction) => void;
+}
+export class UsersController implements IUsersController {
+  readonly usersService = new UsersService();
 
   getUser = async (req: UserRequest, res: Response, next: NextFunction) => {
     try {
       const { userId } = req.params as { userId: string };
       const user = await this.usersService.findOneUser({ userId });
 
-      return res.status(200).json(user);
+      res.status(200).json(user);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   };
 
@@ -23,9 +29,9 @@ export class UsersController {
       const { userId } = req.user!;
       const user = await this.usersService.findOneUser({ userId });
 
-      return res.status(200).json(user);
+      res.status(200).json(user);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   };
 
@@ -38,9 +44,9 @@ export class UsersController {
         _id: (userId as unknown) as ObjectId,
       });
 
-      return res.status(200).json(user);
+      res.status(200).json(user);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   };
 }
