@@ -11,8 +11,8 @@ export class HttpException extends Error {
     this.errors = errors;
   }
 
-  static BadRequest({ message = 'Bad request', errors = [] }) {
-    return new HttpException(400, message, errors);
+  static BadRequest(message = 'Bad request') {
+    return new HttpException(400, message);
   }
 
   static UnauthorizedError(message = 'Not authorized') {

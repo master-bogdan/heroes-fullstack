@@ -1,6 +1,7 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
+  rootDir: './src',
   verbose: true,
   preset: 'ts-jest',
   testEnvironment: 'node',
@@ -11,8 +12,8 @@ const config: Config.InitialOptions = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   testMatch: [
-    '**/tests/**/*.spec.ts',
-    '**/tests/**/*.test.ts',
+    '**/*.spec.ts',
+    '**/*.test.ts',
   ],
 };
 

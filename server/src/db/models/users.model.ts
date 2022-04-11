@@ -3,7 +3,7 @@ import { IHero } from './heroes.model';
 import { UsersSchema } from '../schemas/users.schema';
 
 export interface IUser {
-  _id: ObjectId;
+  _id?: ObjectId;
   nickname: string;
   email: string;
   password: string;

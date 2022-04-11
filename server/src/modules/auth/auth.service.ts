@@ -57,7 +57,7 @@ export class AuthService implements IAuthService {
     const foundedUser = await this.usersService.findOneUser({ email, nickname });
 
     if (foundedUser) {
-      throw HttpException.Forbidden('User with this email or nickname exist!');
+      throw HttpException.BadRequest('User with this email or nickname exist!');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

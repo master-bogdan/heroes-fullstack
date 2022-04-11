@@ -28,4 +28,4 @@ app.use('/api/v1/health', HealthRouter);
 // Error handling
 app.use(errorMiddleware);
 
-export default app;
+export { app };
