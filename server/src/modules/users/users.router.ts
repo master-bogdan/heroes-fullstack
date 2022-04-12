@@ -8,7 +8,7 @@ const router = Router();
 const usersController = new UsersController();
 
 router
-  .get('/:userId', authGuard, usersController.getUser)
+  .get('/:userId', usersController.getUser)
   .post('/me', authGuard, usersController.getCurrentUser)
   .patch('/me', authGuard, UpdateUserValidationRules, validateMiddleware, usersController.updateCurrentUser);
 

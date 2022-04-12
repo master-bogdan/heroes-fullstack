@@ -4,7 +4,9 @@ import { IUser } from '../../db/models/users.model';
 interface IUsersService {
   findOneUser: ({
     email, nickname, userId,
-  }: { email?: string; nickname?: string, userId?: string }) => Promise<IUser | null>;
+  }: {
+    email?: string; nickname?: string, userId?: string, isPassword?: boolean
+  }) => Promise<IUser | null>;
   createUser: (user: IUser) => Promise<IUser | null>;
   updateUser: (user: Partial<IUser>) => Promise<IUser | null>;
   deleteUser: (email: string) => Promise<unknown>;
@@ -21,10 +23,11 @@ export class UsersService implements IUsersService {
     email,
     nickname,
     userId,
-  }: { email?: string; nickname?: string, userId?: string }) {
+    isPassword = false,
+  }: { email?: string; nickname?: string, userId?: string, isPassword?: boolean }) {
     return this.usersRepository.findOne({
       $or: [{ email }, { nickname }, { _id: userId }],
-    });
+    }, isPassword);
   }
 
   async updateUser(user: Partial<IUser>) {

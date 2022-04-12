@@ -2,7 +2,9 @@ import { FilterQuery, Document } from 'mongoose';
 import { IUser, UsersModel } from '../../db/models/users.model';
 
 interface IUsersRepository {
-  findOne: (filter?: FilterQuery<IUser & Document<any, any, any>>) => Promise<IUser | null>;
+  findOne: (
+    filter?: FilterQuery<IUser & Document<any, any, any>>, isPassword?: boolean
+  ) => Promise<IUser | null>;
   create: (user: IUser) => Promise<IUser | null>;
   update: (user: Partial<IUser>) => Promise<IUser | null>;
   delete: (email: string) => Promise<unknown>;
@@ -11,9 +13,9 @@ interface IUsersRepository {
 export class UsersRepository implements IUsersRepository {
   private readonly userModel = UsersModel;
 
-  async findOne(filter?: FilterQuery<IUser & Document<any, any, any>>) {
+  async findOne(filter?: FilterQuery<IUser & Document<any, any, any>>, isPassword = false) {
     return this.userModel.findOne(filter, {
-      password: 0,
+      password: isPassword,
     });
   }
 

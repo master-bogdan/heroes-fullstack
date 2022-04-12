@@ -30,7 +30,7 @@ export class AuthService implements IAuthService {
   async login(dto: ILoginDTO) {
     const { nickname, password } = dto;
 
-    const user = await this.usersService.findOneUser({ nickname });
+    const user = await this.usersService.findOneUser({ nickname, isPassword: true });
 
     if (!user) {
       throw HttpException.NotFound('User not found');
@@ -83,6 +83,10 @@ export class AuthService implements IAuthService {
 
   async refresh(accessToken: string) {
     const userPayload = this.jwtService.validateAccessToken(accessToken, true);
+
+    if (!userPayload) {
+      throw HttpException.Forbidden('Access token invalid');
+    }
 
     const sessionExist = await this.sessionsService.findSession(userPayload!.userId);
 
