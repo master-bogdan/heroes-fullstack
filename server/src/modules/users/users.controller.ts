@@ -44,7 +44,7 @@ export class UsersController implements IUsersController {
         _id: (userId as unknown) as ObjectId,
       });
 
-      res.status(200).json(user);
+      res.status(206).json(user);
     } catch (error) {
       next(error);
     }

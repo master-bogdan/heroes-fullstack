@@ -47,7 +47,7 @@ export class HeroesController implements IHeroesController {
         ownerId: userId,
       });
 
-      res.status(200).json(result);
+      res.status(201).json(result);
     } catch (error) {
       next(error);
     }
