@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useTypeSelector } from 'hooks/useTypeSelector';
+import { useTypedSelector } from 'hooks/useTypedSelector';
 import Grid from '@material-ui/core/Grid';
 // Components
-import Header from 'components/Header';
+import Header from 'layouts/MainLayout/components/Header';
 import CreateForm from 'components/CreateForm';
-import Character from 'components/Character';
+import Hero from 'components/Hero';
 import Container from 'components/Ui/Container';
 import Spinner from 'components/Spinner';
-// Actions
-import { FetchCharacters } from 'store/crud/crudActions';
-// Types
-import { ICharacter } from 'store/crud/crudTypes';
 // Styles
 import {
   MainBlock,
@@ -20,13 +16,12 @@ import {
 
 const Main: React.FC = () => {
   const dispatch = useDispatch();
-  const { characters, isLoading } = useTypeSelector(({ crud }) => crud);
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    dispatch(FetchCharacters());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(FetchCharacters());
+  // }, []);
 
   return (
     <MainBlock>
@@ -38,7 +33,7 @@ const Main: React.FC = () => {
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
       />
-      {isLoading ? (
+      {/* {isLoading ? (
         <Spinner />
       ) : (
         <ContentWrapper>
@@ -53,7 +48,7 @@ const Main: React.FC = () => {
               />
             ))}
         </ContentWrapper>
-      )}
+      )} */}
     </MainBlock>
   );
 };

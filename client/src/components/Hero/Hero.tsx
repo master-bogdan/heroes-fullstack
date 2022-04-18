@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CardEditButton, CardDeleteButton } from '../Ui/Buttons';
-// Actions
-import { UpdateCharacter, DeleteCharacter } from 'store/crud/crudActions';
-// Types
-import { UpdateFormData } from 'store/crud/crudTypes';
 // Styles
 import {
   Card,
@@ -24,7 +20,7 @@ interface Props {
   description: string
 }
 
-const Character: React.FC<Props> = ({
+const Hero: React.FC<Props> = ({
   id,
   img,
   title,
@@ -33,7 +29,7 @@ const Character: React.FC<Props> = ({
   const dispatch = useDispatch();
 
   const [isEdit, setIsEdit] = useState <boolean>(false);
-  const [values, setValue] = useState <UpdateFormData>({
+  const [values, setValue] = useState({
     img,
     title,
     description,
@@ -42,7 +38,7 @@ const Character: React.FC<Props> = ({
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setIsEdit(!isEdit);
-    dispatch(UpdateCharacter(id, values));
+    // dispatch(UpdateCharacter(id, values));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -53,7 +49,7 @@ const Character: React.FC<Props> = ({
   };
 
   const deleteChar = () => {
-    dispatch(DeleteCharacter(id));
+    // dispatch(DeleteCharacter(id));
   };
 
   if (isEdit) {
@@ -103,4 +99,4 @@ const Character: React.FC<Props> = ({
   );
 };
 
-export default Character;
+export default Hero;

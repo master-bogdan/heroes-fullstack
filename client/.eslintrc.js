@@ -56,5 +56,6 @@ module.exports = {
     'no-underscore-dangle': 0,
     'no-explicit-any': 0,
     'quote-props': 0,
+    'no-param-reassign': 0,
   },
 };

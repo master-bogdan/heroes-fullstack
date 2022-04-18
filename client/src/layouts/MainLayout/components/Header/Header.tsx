@@ -2,10 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 // Components
-import Container from '../Ui/Container';
-import { HeaderButton } from '../Ui/Buttons';
-// Actions
-import { setLoginAction } from 'store/auth/authActions';
+import Container from '../../../../components/Ui/Container';
+import { HeaderButton } from '../../../../components/Ui/Buttons';
 // Styles
 import {
   Block,
@@ -24,14 +22,13 @@ const Header: React.FC<Props> = ({ modalOpen, setModalOpen }) => {
 
   const logoutHandler = () => {
     localStorage.removeItem('authToken');
-    dispatch(setLoginAction(false));
     history.push('/login');
   };
 
   return (
     <Block>
       <Container>
-        <Logo>CRUD CHARACTER APP</Logo>
+        <Logo>HERO APP</Logo>
         <ButtonGroup>
           <HeaderButton
             bg="black"

@@ -1,22 +1,17 @@
 import {
-  createStore,
-  applyMiddleware,
-  combineReducers,
   Action,
+  configureStore,
   Store,
-} from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import reduxThunk, { ThunkAction } from 'redux-thunk';
+  combineReducers,
+} from '@reduxjs/toolkit';
 // Reducers
-import crudReducer from './crud/crudReducer';
-import authReducer from './auth/authReducer';
+import { authReducer } from './auth/auth.slice';
+import { authService } from './auth/auth.service';
 
 const rootReducer = combineReducers({
-  crud: crudReducer,
   auth: authReducer,
+  [authService.reducerPath]: authService.reducer,
 });
-
-// middleware
 
 const logger = (store: Store) => (next: any) => (action: Action) => {
   console.group(action.type);
@@ -27,25 +22,21 @@ const logger = (store: Store) => (next: any) => (action: Action) => {
   return result;
 };
 
-let middleware: any = [
-  reduxThunk,
-];
-const processNode: string = process.env.NODE_ENV;
-if (processNode === 'development') {
+let middleware: any = [];
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+if (!isProduction) {
   middleware = [...middleware, logger];
 }
 
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(...middleware)),
-);
+export const store = configureStore({
+  reducer: rootReducer,
+  devTools: !isProduction,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
+});
 
-// global types
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
-  >
-export type AppDispatch = typeof store.dispatch;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof rootReducer>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch

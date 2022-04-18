@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'test-utils';
-import Character from './Character';
+import Hero from './Hero';
 
 const character = {
   id: '1',
@@ -12,7 +12,7 @@ const character = {
 describe('Character Components', () => {
   it('Should render component', () => {
     render(
-      <Character
+      <Hero
         id={character.id}
         img={character.img}
         title={character.title}

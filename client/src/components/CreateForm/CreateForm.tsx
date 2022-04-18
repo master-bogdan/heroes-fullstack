@@ -11,8 +11,6 @@ import {
   SubmitButton,
   CancelButton,
 } from './styles';
-import { CreateCharacter } from 'store/crud/crudActions';
-import { ICreateCharacter } from 'store/crud/crudTypes';
 
 interface FormProps {
   modalOpen: boolean
@@ -32,7 +30,6 @@ const CreateForm: React.FC<FormProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(CreateCharacter(formData));
     setModalOpen(!modalOpen);
   };
 
