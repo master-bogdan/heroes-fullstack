@@ -80,7 +80,7 @@ describe('[Heroes Controller] - /api/v1/heroes', () => {
     });
   });
 
-  it('+ POST - should return single hero', async () => {
+  it('+ GET - should return single hero', async () => {
     const res = await request
       .get(`/api/v1/heroes/${validHero._id}`)
       .expect(200);
@@ -92,12 +92,47 @@ describe('[Heroes Controller] - /api/v1/heroes', () => {
     expect(res.body).toHaveProperty('ownerId', userId);
   });
 
-  it('+ POST - should return all heroes with pagination', async () => {
+  it('+ GET - should return not more than 5 heroes', async () => {
     const res = await request
       .get('/api/v1/heroes')
       .expect(200);
 
+    expect(res.body).toHaveProperty('totalPages');
+    expect(res.body).toHaveProperty('total');
     expect(res.body.heroes.length).not.toBeGreaterThan(5);
+  });
+
+  it('+ GET - should return all heroes with pagination', async () => {
+    const res = await request
+      .get('/api/v1/heroes')
+      .query({
+        page: 0,
+        limit: 1,
+      })
+      .expect(200);
+
+    expect(res.body.heroes.length).toBe(1);
+  });
+
+  it('+ PATCH - should update hero', async () => {
+    const res = await request
+      .patch(`/api/v1/heroes/${validHero._id}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        title: 'Updated title',
+      })
+      .expect(206);
+
+    expect(res.body.title).toBe('Updated title');
+  });
+
+  it('+ DELETE - should delete hero', async () => {
+    const res = await request
+      .delete(`/api/v1/heroes/${validHero._id}`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(202);
+
+    expect(res.body).toEqual({ _id: validHero._id });
   });
 
   afterAll(async () => {

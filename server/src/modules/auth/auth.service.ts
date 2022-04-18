@@ -1,9 +1,12 @@
 import bcrypt from 'bcryptjs';
+
 // Exceptions
 import { HttpException } from '../../common/exceptions/http-exception';
 // Types
 import { IUser } from '../../db/models/users.model';
+// DTO
 import { ILoginDTO } from '../../dto/auth/login.dto';
+import { IRegisterDTO } from '../../dto/auth/register.dto';
 // Services
 import { UsersService } from '../users/users.service';
 import { JwtService } from './services/jwt.service';
@@ -14,7 +17,7 @@ interface IAuthService {
   readonly jwtService: JwtService;
   readonly sessionsService: SessionsService;
   login(dto: ILoginDTO): Promise<{ accessToken: string, refreshToken: string }>;
-  register(dto: Required<ILoginDTO>): Promise<IUser>;
+  register(dto: IRegisterDTO): Promise<IUser>;
   refresh(accessToken: string): Promise<{ accessToken: string }>;
   /**
    * @todo
@@ -51,7 +54,7 @@ export class AuthService implements IAuthService {
     return tokens;
   }
 
-  async register(dto: ILoginDTO) {
+  async register(dto: IRegisterDTO) {
     const { nickname, email, password } = dto;
 
     const foundedUser = await this.usersService.findOneUser({ email, nickname });

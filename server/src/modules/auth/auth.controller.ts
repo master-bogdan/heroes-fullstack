@@ -5,6 +5,7 @@ import { HttpException } from '../../common/exceptions/http-exception';
 import { AuthService } from './auth.service';
 // DTO
 import { ILoginDTO } from '../../dto/auth/login.dto';
+import { IRegisterDTO } from '../../dto/auth/register.dto';
 // Interfaces
 import { UserRequest } from '../../interfaces/user-request.interface';
 
@@ -20,12 +21,12 @@ export class AuthController implements IAuthController {
   readonly authService = new AuthService();
 
   login = async (
-    req: Request<Record<string, any>, Record<string, any>, ILoginDTO>,
+    req: Request,
     res: Response,
     next: NextFunction,
   ) => {
     try {
-      const { accessToken } = await this.authService.login(req.body);
+      const { accessToken } = await this.authService.login(req.body as ILoginDTO);
 
       res.status(200).json({ accessToken });
     } catch (error) {
@@ -35,7 +36,7 @@ export class AuthController implements IAuthController {
 
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await this.authService.register(req.body);
+      const user = await this.authService.register(req.body as IRegisterDTO);
 
       res.status(201).json(user);
     } catch (error) {

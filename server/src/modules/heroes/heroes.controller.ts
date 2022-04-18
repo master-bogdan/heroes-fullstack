@@ -60,7 +60,7 @@ export class HeroesController implements IHeroesController {
 
       const result = await this.heroesService.updateHero(heroId, heroData);
 
-      res.status(200).json(result);
+      res.status(206).json(result);
     } catch (error) {
       next(error);
     }
@@ -71,7 +71,7 @@ export class HeroesController implements IHeroesController {
       const { heroId } = req.params!;
       const result = await this.heroesService.deleteHero(heroId);
 
-      res.status(200).json(result);
+      res.status(202).json(result);
     } catch (error) {
       next(error);
     }
