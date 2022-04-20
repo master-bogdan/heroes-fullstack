@@ -10,6 +10,7 @@ const heroesController = new HeroesController();
 
 router
   .get('/', heroesController.getAllHeroes)
+  .get('/me', authGuard, heroesController.getUserHeroes)
   .get('/:heroId', heroesController.getHero)
   .post('/', authGuard, CreateHeroValidationRules, validateMiddleware, heroesController.createHero)
   .patch('/:heroId', authGuard, UpdateHeroValidationRules, validateMiddleware, heroesController.updateHero)

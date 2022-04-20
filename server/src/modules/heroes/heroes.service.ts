@@ -8,9 +8,7 @@ interface IHeroesService {
   getAllHeroes({
     page,
     limit,
-  }: {
-    page: number;
-    limit: number }): Promise<{ totalPages: number; total: number; heroes: IHero[] }>;
+  }: IPaginationQuery): Promise<{ totalPages: number; total: number; heroes: IHero[] }>;
   getHero(heroId: string): Promise<IHero | null>;
   createHero(dto: IHero): Promise<IHero | null>;
   updateHero(heroId: string, dto: Partial<IHero>): Promise<IHero | null>;
@@ -29,6 +27,23 @@ export class HeroesService implements IHeroesService {
     const currentPage = Math.ceil(limit * page);
 
     const heroes = await this.heroesRepository.findAll(+currentPage, +limit);
+
+    return {
+      totalPages,
+      total,
+      heroes,
+    };
+  }
+
+  async getUserHeroes({
+    page = 0,
+    limit = 5,
+  }: IPaginationQuery, userId: string) {
+    const total = await this.heroesRepository.countAll(userId);
+    const totalPages = total % limit === 0 ? total / limit : Math.floor(total / limit) + 1;
+    const currentPage = Math.ceil(limit * page);
+
+    const heroes = await this.heroesRepository.findAll(+currentPage, +limit, userId);
 
     return {
       totalPages,

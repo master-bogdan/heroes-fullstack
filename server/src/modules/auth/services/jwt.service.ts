@@ -12,26 +12,35 @@ interface IJwtService {
 
 export class JwtService implements IJwtService {
   readonly accessTokenSecret: string;
+  readonly accessTokenExpires: string;
   readonly refreshTokenSecret: string;
+  readonly refreshTokenExpires: string;
 
   constructor() {
-    const { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } = config();
+    const {
+      JWT_ACCESS_SECRET,
+      JWT_ACCESS_EXPIRES,
+      JWT_REFRESH_SECRET,
+      JWT_REFRESH_EXPIRES,
+    } = config().JWT;
 
     this.accessTokenSecret = JWT_ACCESS_SECRET;
+    this.accessTokenExpires = JWT_ACCESS_EXPIRES;
     this.refreshTokenSecret = JWT_REFRESH_SECRET;
+    this.refreshTokenExpires = JWT_REFRESH_EXPIRES;
   }
 
   generateTokens(userId: string) {
     const accessToken = jwt.sign(
       { userId },
       this.accessTokenSecret,
-      { expiresIn: '30m' },
+      { expiresIn: this.accessTokenExpires },
     );
 
     const refreshToken = jwt.sign(
       { userId },
       this.refreshTokenSecret,
-      { expiresIn: '30d' },
+      { expiresIn: this.refreshTokenExpires },
     );
 
     return { accessToken, refreshToken };

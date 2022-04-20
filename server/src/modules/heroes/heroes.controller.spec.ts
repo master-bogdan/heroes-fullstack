@@ -12,7 +12,7 @@ let accessToken: string;
 
 describe('[Heroes Controller] - /api/v1/heroes', () => {
   beforeAll(async () => {
-    const { MONGO_URI_TEST } = config();
+    const { MONGO_URI_TEST } = config().DB;
     await connectDB(MONGO_URI_TEST);
 
     user = {
@@ -114,6 +114,16 @@ describe('[Heroes Controller] - /api/v1/heroes', () => {
     expect(res.body.heroes.length).toBe(1);
   });
 
+  it('+ GET - should return all user heroes', async () => {
+    const res = await request
+      .get('/api/v1/heroes/me')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200);
+
+    expect(res.body.heroes.length).not.toBeGreaterThan(5);
+    expect(res.body.heroes[0]).toHaveProperty('ownerId', userId);
+  });
+
   it('+ PATCH - should update hero', async () => {
     const res = await request
       .patch(`/api/v1/heroes/${validHero._id}`)
@@ -136,6 +146,11 @@ describe('[Heroes Controller] - /api/v1/heroes', () => {
   });
 
   afterAll(async () => {
-    await closeDB();
+    await request
+      .get('/api/v1/auth/logout')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200);
+
+    return closeDB();
   });
 });

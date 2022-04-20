@@ -10,7 +10,7 @@ let accessToken: string;
 
 describe('[Auth Controller] - /api/v1/auth', () => {
   beforeAll(async () => {
-    const { MONGO_URI_TEST } = config();
+    const { MONGO_URI_TEST } = config().DB;
     await connectDB(MONGO_URI_TEST);
 
     registeredUser = {
@@ -29,10 +29,6 @@ describe('[Auth Controller] - /api/v1/auth', () => {
       email: 'test.com',
       password: 'an',
     };
-  });
-
-  afterAll(async () => {
-    await closeDB();
   });
 
   describe('#Register - /api/v1/auth/register', () => {
@@ -201,5 +197,9 @@ describe('[Auth Controller] - /api/v1/auth', () => {
         statusCode: 401,
       });
     });
+  });
+
+  afterAll(async () => {
+    return closeDB();
   });
 });

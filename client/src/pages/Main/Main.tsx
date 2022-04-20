@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useTypedSelector } from 'hooks/useTypedSelector';
-import Grid from '@material-ui/core/Grid';
+import { useGetHeroesQuery } from 'store/heroes/heroes.services';
 // Components
 import Header from 'layouts/MainLayout/components/Header';
 import CreateForm from 'components/CreateForm';
 import Hero from 'components/Hero';
-import Container from 'components/Ui/Container';
 import Spinner from 'components/Spinner';
 // Styles
 import {
@@ -15,13 +12,9 @@ import {
 } from './styles';
 
 const Main: React.FC = () => {
-  const dispatch = useDispatch();
-
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   dispatch(FetchCharacters());
-  // }, []);
+  const { data, isLoading } = useGetHeroesQuery('');
 
   return (
     <MainBlock>
@@ -33,22 +26,21 @@ const Main: React.FC = () => {
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
       />
-      {/* {isLoading ? (
+      {isLoading ? (
         <Spinner />
       ) : (
         <ContentWrapper>
-          {(characters.length !== 0 && characters !== undefined)
-            && characters.map((item: ICharacter) => (
-              <Character
-                key={item._id}
-                id={item._id}
-                img={item.image}
-                title={item.title}
-                description={item.description}
-              />
-            ))}
+          {data.heroes.map((item: any) => (
+            <Hero
+              key={item._id}
+              id={item._id}
+              img={item.image}
+              title={item.title}
+              description={item.description}
+            />
+          ))}
         </ContentWrapper>
-      )} */}
+      )}
     </MainBlock>
   );
 };

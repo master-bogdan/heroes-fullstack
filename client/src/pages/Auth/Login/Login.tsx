@@ -17,18 +17,18 @@ import {
 const Login: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLogin } = useTypedSelector(({ auth }) => auth);
+  // const { isLogin } = useTypedSelector(({ auth }) => auth);
 
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
 
-  useEffect(() => {
-    if (isLogin) {
-      history.push('/');
-    }
-  }, [dispatch, isLogin]);
+  // useEffect(() => {
+  //   if (isLogin) {
+  //     history.push('/');
+  //   }
+  // }, [dispatch, isLogin]);
 
   return (
     <LoginPage>

@@ -50,13 +50,9 @@ const baseQueryWithReAuth: BaseQueryFn<
   return result;
 };
 
-export const baseQueryParams = (reducerPath: string, tags?: string[]) => {
-  const baseQuery = createApi({
-    baseQuery: baseQueryWithReAuth,
-    endpoints: () => ({}),
-    reducerPath,
-    tagTypes: tags?.length ? tags : [],
-  });
-
-  return baseQuery;
-};
+export const baseQueryWithParams = (reducerPath: string, tags?: string[]) => createApi({
+  baseQuery: baseQueryWithReAuth,
+  endpoints: () => ({}),
+  reducerPath,
+  tagTypes: tags?.length ? tags : [],
+});

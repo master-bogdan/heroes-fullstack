@@ -9,7 +9,7 @@ let accessToken: string;
 
 describe('[Users Controller] - /api/v1/users', () => {
   beforeAll(async () => {
-    const { MONGO_URI_TEST } = config();
+    const { MONGO_URI_TEST } = config().DB;
     await connectDB(MONGO_URI_TEST);
 
     user = {
@@ -71,6 +71,11 @@ describe('[Users Controller] - /api/v1/users', () => {
         nickname: 'Super Nickname2',
       })
       .expect(206);
+
+    await request
+      .get('/api/v1/auth/logout')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect(200);
 
     await closeDB();
   });

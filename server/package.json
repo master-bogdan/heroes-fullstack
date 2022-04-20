@@ -23,7 +23,7 @@
     "build": "rm -rf ./build && npm run build:server && npm run build:client",
     "build:server": "tsc --skipLibCheck",
     "build:client": "cd ../client && npm run build",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch --detectOpenHandles"
   },

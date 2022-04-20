@@ -12,8 +12,8 @@ import {
 } from './styles';
 
 interface Props {
-  modalOpen: boolean;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  modalOpen?: boolean;
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Header: React.FC<Props> = ({ modalOpen, setModalOpen }) => {
@@ -32,7 +32,6 @@ const Header: React.FC<Props> = ({ modalOpen, setModalOpen }) => {
         <ButtonGroup>
           <HeaderButton
             bg="black"
-            onClick={() => setModalOpen(!modalOpen)}
           >
             Add new character
           </HeaderButton>

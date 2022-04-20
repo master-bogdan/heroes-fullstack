@@ -6,11 +6,13 @@ import {
 } from '@reduxjs/toolkit';
 // Reducers
 import { authReducer } from './auth/auth.slice';
-import { authService } from './auth/auth.service';
+import { authServices } from './auth/auth.services';
+import { heroesServices } from './heroes/heroes.services';
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  [authService.reducerPath]: authService.reducer,
+  // auth: authReducer,
+  [heroesServices.reducerPath]: heroesServices.reducer,
+  [authServices.reducerPath]: authServices.reducer,
 });
 
 const logger = (store: Store) => (next: any) => (action: Action) => {

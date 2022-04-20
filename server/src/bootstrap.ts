@@ -4,17 +4,17 @@ import { config } from './config/config';
 import { app } from './app';
 
 const bootstrap = async () => {
-  const { PORT, MONGO_URI, MONGO_URI_TEST } = config();
+  const { PORT, DB } = config();
 
   try {
-    await connectDB(MONGO_URI_TEST);
+    await connectDB(DB.MONGO_URI);
 
     app.listen(PORT, () => {
       consoleMessage.system(`⚡️[server]: Server is running at https://localhost:${PORT}`);
     });
   } catch (error) {
     consoleMessage.error(error as string);
-    process.exit(0);
+    process.exit(1);
   }
 };
 

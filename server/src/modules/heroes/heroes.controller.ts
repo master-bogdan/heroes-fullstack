@@ -26,6 +26,18 @@ export class HeroesController implements IHeroesController {
     }
   };
 
+  getUserHeroes = async (req: UserRequest, res: Response, next: NextFunction) => {
+    try {
+      const query = (req.query as unknown) as IPaginationQuery;
+      const { userId } = req.user!;
+      const result = await this.heroesService.getUserHeroes(query, userId);
+
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   getHero = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { heroId } = req.params;

@@ -5,8 +5,8 @@ import { UsersModel } from '../../db/models/users.model';
 interface IHeroesRepository {
   readonly heroesModel: typeof HeroesModel;
   readonly usersModel: typeof UsersModel;
-  findAll(offset: number, limit: number): Promise<IHero[]>;
-  countAll(): Promise<number>;
+  findAll(offset: number, limit: number, userId?: string): Promise<IHero[]>;
+  countAll(userId?: string): Promise<number>;
   findOne(heroId: string): Promise<IHero | null>;
   create(hero: IHero): Promise<IHero | null>;
   update(heroId: string, hero: Partial<IHero>): Promise<IHero | null>;
@@ -17,9 +17,9 @@ export class HeroesRepository implements IHeroesRepository {
   readonly heroesModel = HeroesModel;
   readonly usersModel = UsersModel;
 
-  async findAll(offset: number, limit: number) {
+  async findAll(offset: number, limit: number, userId?: string) {
     return this.heroesModel.find(
-      {},
+      userId ? { ownerId: userId } : {},
       null,
       {
         skip: offset,
@@ -36,8 +36,8 @@ export class HeroesRepository implements IHeroesRepository {
     );
   }
 
-  async countAll() {
-    return this.heroesModel.countDocuments();
+  async countAll(userId?: string) {
+    return this.heroesModel.countDocuments(userId ? { ownerId: userId } : {});
   }
 
   async findOne(heroId: string) {

@@ -1,6 +1,9 @@
-import { baseQueryParams } from 'utils/redux/baseQuery';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { customBaseQuery } from 'utils/redux/baseQuery';
 
-export const authService = baseQueryParams('auth').injectEndpoints({
+export const authServices = createApi({
+  baseQuery: customBaseQuery,
+  reducerPath: 'auth',
   endpoints: (builder) => ({
     login: builder.query<any, any>({
       query: () => ({
@@ -21,9 +24,8 @@ export const authService = baseQueryParams('auth').injectEndpoints({
       }),
     }),
   }),
-  overrideExisting: false,
 });
 
 export const {
   useLoginQuery,
-} = authService;
+} = authServices;
