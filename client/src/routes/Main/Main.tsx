@@ -13,7 +13,7 @@ import MainLayout from 'layouts/MainLayout';
 const Main: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const { data, isLoading } = useGetHeroesQuery('');
+  const { data = [], isLoading } = useGetHeroesQuery('');
 
   return (
     <MainLayout>

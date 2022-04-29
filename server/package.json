@@ -18,12 +18,12 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "build:server && node build/bootstrap.js",
+    "start": "node build/bootstrap.js",
     "start:dev": "nodemon src/bootstrap.ts",
     "build": "rm -rf ./build && npm run build:server && npm run build:client",
     "build:server": "tsc --skipLibCheck",
     "build:client": "cd ../client && npm run build",
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch --detectOpenHandles"
   },

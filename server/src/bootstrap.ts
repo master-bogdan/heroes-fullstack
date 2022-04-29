@@ -10,7 +10,7 @@ const bootstrap = async () => {
     await connectDB(DB.MONGO_URI);
 
     app.listen(PORT, () => {
-      consoleMessage.system(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+      consoleMessage.system(`⚡️[server]: Server is running at http://localhost:${PORT}`);
     });
   } catch (error) {
     consoleMessage.error(error as string);
