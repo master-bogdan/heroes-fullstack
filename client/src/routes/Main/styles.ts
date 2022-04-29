@@ -1,10 +1,5 @@
 import styled from 'styled-components';
 
-export const MainBlock = styled.div`
-  height: 100vh;
-  overflow: hidden;
-`;
-
 export const ContentWrapper = styled.main`
   padding: 50px 0px;
   height: calc(100% - 90px);  

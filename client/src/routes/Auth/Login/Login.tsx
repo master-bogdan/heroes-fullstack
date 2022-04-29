@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useTypedSelector } from 'hooks/useTypedSelector';
 import { useHistory } from 'react-router';
 // Components
 import { LoginForm } from 'components/Ui/Forms';
@@ -13,16 +12,32 @@ import {
   Wrapper,
   RegisterLink,
 } from './styles';
+import { useLoginMutation } from 'store/auth/auth.services';
 
 const Login: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  // const { isLogin } = useTypedSelector(({ auth }) => auth);
+  const [login, { isLoading, error }] = useLoginMutation();
 
   const [loginData, setLoginData] = useState({
-    email: '',
+    nickname: '',
     password: '',
   });
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.persist();
+
+    setLoginData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const onSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    await login(loginData);
+  };
 
   // useEffect(() => {
   //   if (isLogin) {
@@ -34,8 +49,7 @@ const Login: React.FC = () => {
     <LoginPage>
       <Wrapper>
         <LoginTitle>
-          Welcome to favorite character app <br />
-          Please Login
+          Login to Heroes app
         </LoginTitle>
         <LoginForm>
           {/* {error && (
@@ -44,18 +58,23 @@ const Login: React.FC = () => {
             </ErrorText>
           )} */}
           <InputStyled
-            type="email"
-            placeholder="Email"
-            name="email"
+            type="text"
+            placeholder="Nickname"
+            name="nickname"
+            onChange={onChange}
             required
           />
           <InputStyled
             type="password"
             placeholder="Password"
             name="password"
+            onChange={onChange}
             required
           />
-          <LoginButton type="submit">
+          <LoginButton
+            onClick={onSubmit}
+            type="submit"
+          >
             Log in
           </LoginButton>
           <RegisterLink to="/register">

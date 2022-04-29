@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useGetHeroesQuery } from 'store/heroes/heroes.services';
 // Components
-import Header from 'layouts/MainLayout/components/Header';
 import CreateForm from 'components/CreateForm';
 import Hero from 'components/Hero';
 import Spinner from 'components/Spinner';
 // Styles
 import {
-  MainBlock,
   ContentWrapper,
 } from './styles';
+import MainLayout from 'layouts/MainLayout';
 
 const Main: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -17,11 +16,7 @@ const Main: React.FC = () => {
   const { data, isLoading } = useGetHeroesQuery('');
 
   return (
-    <MainBlock>
-      <Header
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-      />
+    <MainLayout>
       <CreateForm
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
@@ -34,14 +29,14 @@ const Main: React.FC = () => {
             <Hero
               key={item._id}
               id={item._id}
-              img={item.image}
+              img={item.imageUrl}
               title={item.title}
               description={item.description}
             />
           ))}
         </ContentWrapper>
       )}
-    </MainBlock>
+    </MainLayout>
   );
 };
 

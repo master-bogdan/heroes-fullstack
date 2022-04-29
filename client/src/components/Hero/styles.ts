@@ -8,10 +8,9 @@ export const Card = styled.div`
   overflow: hidden;
 `;
 
-export const CardImg = styled.img`
+export const CardImg = styled.div`
   width: 100%;
   min-height: 38%;
-  max-height: 38%;
   border: 1px solid black;
   object-fit: cover;
 `;

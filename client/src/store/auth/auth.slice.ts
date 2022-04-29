@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { authServices } from './auth.services';
 import { AuthState } from './auth.types';
 
 const initialState: AuthState = {
@@ -19,6 +20,15 @@ const authSlice = createSlice({
     setRegister(state) {
       state.isLogin = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      authServices.endpoints.login.matchFulfilled,
+      (state, { payload }) => {
+        localStorage.setItem('accessToken', payload.accessToken);
+        state.user = payload.user;
+      },
+    );
   },
 });
 

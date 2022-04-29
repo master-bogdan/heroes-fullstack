@@ -3,21 +3,24 @@ import { customBaseQuery } from 'utils/redux/baseQuery';
 
 export const authServices = createApi({
   baseQuery: customBaseQuery,
-  reducerPath: 'auth',
+  reducerPath: 'api/auth',
   endpoints: (builder) => ({
-    login: builder.query<any, any>({
-      query: () => ({
+    login: builder.mutation<{
+      user: any, accessToken: any
+    }, { nickname: string; password: string }>({
+      query: (data) => ({
         url: '/auth/login',
         method: 'POST',
+        body: data,
       }),
     }),
-    logout: builder.query<any, any>({
+    logout: builder.mutation<any, any>({
       query: () => ({
         url: '/auth/logout',
         method: 'GET',
       }),
     }),
-    register: builder.query<any, any>({
+    register: builder.mutation<any, any>({
       query: () => ({
         url: '/auth/login',
         method: 'POST',
@@ -27,5 +30,7 @@ export const authServices = createApi({
 });
 
 export const {
-  useLoginQuery,
+  useLoginMutation,
+  useRegisterMutation,
+  useLogoutMutation,
 } = authServices;

@@ -10,9 +10,9 @@ import { authServices } from './auth/auth.services';
 import { heroesServices } from './heroes/heroes.services';
 
 const rootReducer = combineReducers({
-  // auth: authReducer,
-  [heroesServices.reducerPath]: heroesServices.reducer,
+  auth: authReducer,
   [authServices.reducerPath]: authServices.reducer,
+  [heroesServices.reducerPath]: heroesServices.reducer,
 });
 
 const logger = (store: Store) => (next: any) => (action: Action) => {

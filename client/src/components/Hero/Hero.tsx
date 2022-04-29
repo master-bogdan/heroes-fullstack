@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CardEditButton, CardDeleteButton } from '../Ui/Buttons';
+import DefaultImage from 'components/Ui/DefaultImage';
 // Styles
 import {
   Card,
@@ -87,7 +88,9 @@ const Hero: React.FC<Props> = ({
 
   return (
     <Card>
-      <CardImg src={img} alt="If you see it, that means you have wrong image url" />
+      <CardImg>
+        <DefaultImage url={img} />
+      </CardImg>
       <CardTitle>{title}</CardTitle>
       <CardDescr>{description}</CardDescr>
       <CardEditButton

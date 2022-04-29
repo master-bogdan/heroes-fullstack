@@ -11,12 +11,11 @@ import {
   ButtonGroup,
 } from './styles';
 
-interface Props {
-  modalOpen?: boolean;
-  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+interface IHeaderProps {
+  isLogin: boolean;
 }
 
-const Header: React.FC<Props> = ({ modalOpen, setModalOpen }) => {
+const Header: React.FC<IHeaderProps> = ({ isLogin }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -28,20 +27,22 @@ const Header: React.FC<Props> = ({ modalOpen, setModalOpen }) => {
   return (
     <Block>
       <Container>
-        <Logo>HERO APP</Logo>
-        <ButtonGroup>
-          <HeaderButton
-            bg="black"
-          >
-            Add new character
-          </HeaderButton>
-          <HeaderButton
-            bg="brown"
-            onClick={logoutHandler}
-          >
-            Logout
-          </HeaderButton>
-        </ButtonGroup>
+        <Logo>HEROES APP</Logo>
+        {isLogin && (
+          <ButtonGroup>
+            <HeaderButton
+              bg="black"
+            >
+              Add new character
+            </HeaderButton>
+            <HeaderButton
+              bg="brown"
+              onClick={logoutHandler}
+            >
+              Logout
+            </HeaderButton>
+          </ButtonGroup>
+        )}
       </Container>
     </Block>
   );
