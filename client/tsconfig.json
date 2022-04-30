@@ -3,11 +3,11 @@
     "baseUrl": "./src",
     "outDir": "../build",
     "module": "esnext",
-    "target": "es6",
+    "target": "es5",
     "lib": [
-      "es6",
       "dom",
-      "esnext.asynciterable"
+      "dom.iterable",
+      "esnext"
     ],
     "sourceMap": true,
     "allowJs": true,
@@ -28,15 +28,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts"
-  ],
   "include": [
     "src"
   ]
