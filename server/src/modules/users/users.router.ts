@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { validateMiddleware } from '../../middlewares/validate.middleware';
-import { authGuard } from '../../guards/auth.guard';
+import { validateMiddleware } from '../../common/middlewares/validate.middleware';
+import { authGuard } from '../../common/guards/auth.guard';
 import { UsersController } from './users.controller';
 import { UpdateUserValidationRules } from './validations/update-user.validation';
 

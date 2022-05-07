@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { HttpException } from '../common/exceptions/http-exception';
+import { HttpException } from '../exceptions/http-exception';
 
 export const validateMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {

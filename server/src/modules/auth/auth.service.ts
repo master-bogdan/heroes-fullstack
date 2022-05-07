@@ -5,8 +5,8 @@ import { HttpException } from '../../common/exceptions/http-exception';
 // Types
 import { IUser } from '../../db/models/users.model';
 // DTO
-import { ILoginDTO } from '../../dto/auth/login.dto';
-import { IRegisterDTO } from '../../dto/auth/register.dto';
+import { ILoginDTO } from './dto/login.dto';
+import { IRegisterDTO } from './dto/register.dto';
 // Services
 import { UsersService } from '../users/users.service';
 import { JwtService } from './services/jwt.service';

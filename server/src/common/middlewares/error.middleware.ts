@@ -1,6 +1,6 @@
 import { ErrorRequestHandler } from 'express';
-import { HttpException } from '../common/exceptions/http-exception';
-import { logger } from '../common/utils/logger';
+import { HttpException } from '../exceptions/http-exception';
+import { logger } from '../utils/logger';
 
 export const errorMiddleware: ErrorRequestHandler = (
   err,

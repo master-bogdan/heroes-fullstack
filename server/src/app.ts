@@ -3,8 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 // Middlewares
-import { errorMiddleware } from './middlewares/error.middleware';
-import { loggerMiddleware } from './middlewares/logger.middleware';
+import { errorMiddleware } from './common/middlewares/error.middleware';
+import { loggerMiddleware } from './common/middlewares/logger.middleware';
 // Routers
 import { AuthRouter } from './modules/auth/auth.router';
 import { UsersRouter } from './modules/users/users.router';

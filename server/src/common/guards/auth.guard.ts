@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
-import { UserRequest } from '../interfaces/user-request.interface';
-import { JwtService } from '../modules/auth/services/jwt.service';
-import { HttpException } from '../common/exceptions/http-exception';
+import { UserRequest } from '../../interfaces/user-request.interface';
+import { JwtService } from '../../modules/auth/services/jwt.service';
+import { HttpException } from '../exceptions/http-exception';
 
 export const authGuard = async (req: UserRequest, res: Response, next: NextFunction) => {
   const jwtService = new JwtService();

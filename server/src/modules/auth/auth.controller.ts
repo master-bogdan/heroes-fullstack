@@ -4,8 +4,8 @@ import { HttpException } from '../../common/exceptions/http-exception';
 // Services
 import { AuthService } from './auth.service';
 // DTO
-import { ILoginDTO } from '../../dto/auth/login.dto';
-import { IRegisterDTO } from '../../dto/auth/register.dto';
+import { ILoginDTO } from './dto/login.dto';
+import { IRegisterDTO } from './dto/register.dto';
 // Interfaces
 import { UserRequest } from '../../interfaces/user-request.interface';
 

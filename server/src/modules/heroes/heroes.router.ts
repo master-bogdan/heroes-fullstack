@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { validateMiddleware } from '../../middlewares/validate.middleware';
-import { authGuard } from '../../guards/auth.guard';
+import { validateMiddleware } from '../../common/middlewares/validate.middleware';
+import { authGuard } from '../../common/guards/auth.guard';
 import { HeroesController } from './heroes.controller';
 import { CreateHeroValidationRules } from './validations/create-hero.validation';
 import { UpdateHeroValidationRules } from './validations/update-hero.validation';
