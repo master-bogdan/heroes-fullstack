@@ -1,4 +1,4 @@
-import { request } from '../../common/test-utils/index';
+import { request } from '../utils/index';
 import { connectDB, closeDB } from '../../db/connect';
 import { config } from '../../config/config';
 import { IUser } from '../../db/models/users.model';
@@ -7,7 +7,7 @@ const userId = '62546a3de40c5aa70ca4b1bc';
 let user: Partial<IUser>;
 let accessToken: string;
 
-describe('[Users Controller] - /api/v1/users', () => {
+describe('[Users INTEGRATION] - /api/v1/users', () => {
   beforeAll(async () => {
     const { MONGO_URI_TEST } = config().DB;
     await connectDB(MONGO_URI_TEST);

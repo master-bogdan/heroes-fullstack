@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import crypto from 'crypto';
-import { app } from '../../app';
+import { app } from '../../src/app';
 
 export const request = supertest(app);
 

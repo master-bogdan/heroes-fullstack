@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { consoleMessage } from '../common/utils/console-message';
+import { logger } from '../common/utils/logger';
 
 export const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  consoleMessage.logger(`[controller] - ${req.method} ${req.path}`);
+  logger.log(`[controller] - ${req.method} ${req.path}`);
   next();
 };

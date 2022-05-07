@@ -1,5 +1,5 @@
 import { connectDB } from './db/connect';
-import { consoleMessage } from './common/utils/console-message';
+import { logger } from './common/utils/logger';
 import { config } from './config/config';
 import { app } from './app';
 
@@ -10,10 +10,10 @@ const bootstrap = async () => {
     await connectDB(DB.MONGO_URI);
 
     app.listen(PORT, () => {
-      consoleMessage.system(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+      logger.system(`⚡️[server]: Server is running at http://localhost:${PORT}`);
     });
   } catch (error) {
-    consoleMessage.error(error as string);
+    logger.error(error as string);
     process.exit(1);
   }
 };

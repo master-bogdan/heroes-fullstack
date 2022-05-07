@@ -1,4 +1,4 @@
-import { request, randomString } from '../../common/test-utils/index';
+import { request, randomString } from '../utils/index';
 import { connectDB, closeDB } from '../../db/connect';
 import { config } from '../../config/config';
 import { IUser } from '../../db/models/users.model';
@@ -8,7 +8,7 @@ let newUser: IUser;
 let invalidUser: IUser;
 let accessToken: string;
 
-describe('[Auth Controller] - /api/v1/auth', () => {
+describe('[Auth INTEGRATION] - /api/v1/auth', () => {
   beforeAll(async () => {
     const { MONGO_URI_TEST } = config().DB;
     await connectDB(MONGO_URI_TEST);

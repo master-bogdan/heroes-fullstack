@@ -1,7 +1,7 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
-  rootDir: './src',
+  rootDir: './tests',
   verbose: true,
   preset: 'ts-jest',
   testEnvironment: 'node',

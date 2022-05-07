@@ -1,6 +1,6 @@
-import { request } from '../../common/test-utils/index';
+import { request } from '../utils/index';
 
-describe('[Health Controller] - /api/v1/health', () => {
+describe('[Health INTEGRATION] - /api/v1/health', () => {
   it('+ GET Should return object with message "Api is working"', async () => {
     const res = await request
       .get('/api/v1/health')
